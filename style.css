@@ -11,6 +11,7 @@ body {
   font-size: 50px;
   padding-bottom: 10px;
   font-family: sans-serif;
+  font-weight: bold;
 }
 
 .intro {
@@ -20,7 +21,7 @@ body {
   margin: auto;
   font-size: 40px;
   padding: 10px;
-  font-family: arial;
+  font-family: sans-serif;
   border: black 5px solid;
 }
 
@@ -43,6 +44,35 @@ body {
   font-family: arial;
 }
 
+.howToPlay1, .howToPlay2, .howToPlay3 {
+  font-size: 20px;
+  width: 100%;
+  padding-top: 10px;
+  text-align: center;
+}
+
+.redSquare, .blueSquare, .goldCoin {
+  display: block;
+  margin: auto;
+  padding: 10px;
+}
+
+.blueSquare {
+  height: 65px;
+  width: 80px;
+}
+
+.redSquare {
+  height: 80px;
+  width: 70px;
+}
+
+
+.goldCoin {
+  height: 60px;
+  width: 80px;
+}
+
 .playGame, .howToPlay, .highScores {
   background-color: red;
   border: 3px solid black;
@@ -52,19 +82,19 @@ body {
   text-align: center;
 }
 
-.playGame:hover, .howToPlay:hover, .highScores:hover {
+.playGame:hover, .howToPlay:hover, .highScores:hover, .quit:hover {
   background-color: blue;
   color: white;
 }
 
-.howToPlayPage, .highScoresPage {
+.howToPlayPage, .highScoresPage, .youLose {
   width: 70%;
   margin-top: 40px;
   text-align: center;
   margin: auto;
   font-size: 40px;
   padding: 10px;
-  font-family: arial;
+  font-family: sans-serif;
   border: black 5px solid;
 }
 
@@ -81,6 +111,7 @@ body {
   margin: auto;
   font-size: 30px;
   padding-bottom: 10px;
+  font-family: sans-serif;
 }
 
 .lifeCounter {
@@ -89,17 +120,39 @@ body {
   text-align: left;
   font-size: 30px;
   padding-bottom: 10px;
+  font-family: sans-serif;
+}
+
+.quitButton {
+  width: 100%;
+  margin: auto;
+  padding-top: 10px;
+}
+
+.quit {
+  margin: auto;
+  display: block;
+  background-color: red;
+  border: 3px solid black;
+  font-size: 20px;
+  padding: 15px;
+  width: 150px;
+  text-align: center;
+  font-style: normal;
+  font-family: arial;
 }
 
 .footer {
   width: 100%;
   text-align: center;
   margin: auto;
-  font-size: 30px;
-  padding-top: 50px;
+  font-size: 20px;
+  padding-top: 10px;
+  font-family: sans-serif;
 }
 
-@media screen and (max-width:810px) {
+
+@media screen and (max-width:1011px) {
   #canvasGame {
     width: 100%;
   }

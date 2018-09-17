@@ -22,17 +22,18 @@ document.addEventListener('DOMContentLoaded', () => {
   Game.c = Game.canvas.getContext('2d');
   Game.keysPressed = [];
   Game.interval = setInterval(Game.updateGame, 10);
-  Game.player = new component(30, 30, "cyan", 30, 30);
-  Game.token = new component(35, 7.5, "gold", 950, 470);
+  Game.player = new Component(30, 30, "cyan", 30, 30);
+  Game.token = new Component(35, 7.5, "gold", 950, 470);
   Game.levelName = document.getElementsByClassName('levelName')[0];
   Game.levelName.innerHTML = 'Level 1';
   Game.livesRemaining = 3;
+  Game.score = 0;
   Game.lifeCounter = document.getElementsByClassName('lifeCounter')[0];
   lives = () => {
     Game.lifeCounter.innerHTML = `Lives Left: ${Game.livesRemaining}`;
   }
 
-  function component(width, height, colour, x, y) {
+  function Component(width, height, colour, x, y) {
     this.width = width;
     this.height = height;
     this.moveX = 0;
@@ -103,8 +104,7 @@ document.addEventListener('DOMContentLoaded', () => {
       Game.player.y = 50;
       Game.livesRemaining--;
       if (Game.livesRemaining === 0) {
-        alert('GAME OVER!');
-        location.reload();
+        window.location.href = '../html/gameOver.html';
       }
     }
     if (Game.player.x + 30 >= x1 && Game.player.y <= y1 + sizeSmall && Game.player.y + 30 >= y1 && Game.player.x + 30 <= x1 + sizeSmall){
@@ -112,8 +112,7 @@ document.addEventListener('DOMContentLoaded', () => {
       Game.player.y = 50;
       Game.livesRemaining--;
       if (Game.livesRemaining === 0) {
-        alert('GAME OVER!');
-        location.reload();
+        window.location.href = '../html/gameOver.html';
       }
     }
   }
@@ -135,8 +134,7 @@ document.addEventListener('DOMContentLoaded', () => {
       Game.player.y = 50;
       Game.livesRemaining--;
       if (Game.livesRemaining === 0) {
-        alert('GAME OVER!');
-        location.reload();
+        window.location.href = '../html/gameOver.html';
       }
     }
     if (Game.player.x + 30 >= x2 && Game.player.y <= y2 + sizeSmall && Game.player.y + 30 >= y2 && Game.player.x + 30 <= x2 + sizeSmall){
@@ -144,8 +142,7 @@ document.addEventListener('DOMContentLoaded', () => {
       Game.player.y = 50;
       Game.livesRemaining--;
       if (Game.livesRemaining === 0) {
-        alert('GAME OVER!');
-        location.reload();
+        window.location.href = '../html/gameOver.html';
       }
     }
   }
@@ -167,8 +164,7 @@ document.addEventListener('DOMContentLoaded', () => {
       Game.player.y = 50;
       Game.livesRemaining--;
       if (Game.livesRemaining === 0) {
-        alert('GAME OVER!');
-        location.reload();
+        window.location.href = '../html/gameOver.html';
       }
     }
     if (Game.player.x + 30 >= x3 && Game.player.y <= y3 + sizeSmall && Game.player.y + 30 >= y3 && Game.player.x + 30 <= x3 + sizeSmall){
@@ -176,8 +172,7 @@ document.addEventListener('DOMContentLoaded', () => {
       Game.player.y = 50;
       Game.livesRemaining--;
       if (Game.livesRemaining === 0) {
-        alert('GAME OVER!');
-        location.reload();
+        window.location.href = '../html/gameOver.html';
       }
     }
   }
@@ -199,8 +194,7 @@ document.addEventListener('DOMContentLoaded', () => {
       Game.player.y = 50;
       Game.livesRemaining--;
       if (Game.livesRemaining === 0) {
-        alert('GAME OVER!');
-        location.reload();
+        window.location.href = '../html/gameOver.html';
       }
     }
     if (Game.player.x + 30 >= x4 && Game.player.y <= y4 + sizeBig && Game.player.y + 30 >= y4 && Game.player.x + 30 <= x4 + sizeBig){
@@ -208,8 +202,7 @@ document.addEventListener('DOMContentLoaded', () => {
       Game.player.y = 50;
       Game.livesRemaining--;
       if (Game.livesRemaining === 0) {
-        alert('GAME OVER!');
-        location.reload();
+        window.location.href = '../html/gameOver.html';
       }
     }
   }
@@ -231,8 +224,7 @@ document.addEventListener('DOMContentLoaded', () => {
       Game.player.y = 50;
       Game.livesRemaining--;
       if (Game.livesRemaining === 0) {
-        alert('GAME OVER!');
-        location.reload();
+        window.location.href = '../html/gameOver.html';
       }
     }
     if (Game.player.y + 30 >= y5 && Game.player.x <= x5 + sizeSmall && Game.player.x + 30 >= x5 && Game.player.y + 30 <= y5 + sizeSmall){
@@ -240,8 +232,7 @@ document.addEventListener('DOMContentLoaded', () => {
       Game.player.y = 50;
       Game.livesRemaining--;
       if (Game.livesRemaining === 0) {
-        alert('GAME OVER!');
-        location.reload();
+        window.location.href = '../html/gameOver.html';
       }
     }
   }
@@ -264,8 +255,7 @@ document.addEventListener('DOMContentLoaded', () => {
       Game.player.y = 50;
       Game.livesRemaining--;
       if (Game.livesRemaining === 0) {
-        alert('GAME OVER!');
-        location.reload();
+        window.location.href = '../html/gameOver.html';
       }
     }
     if (Game.player.y + 30 >= y6 && Game.player.x <= x6 + sizeSmall && Game.player.x + 30 >= x6 && Game.player.y + 30 <= y6 + sizeSmall){
@@ -273,8 +263,7 @@ document.addEventListener('DOMContentLoaded', () => {
       Game.player.y = 50;
       Game.livesRemaining--;
       if (Game.livesRemaining === 0) {
-        alert('GAME OVER!');
-        location.reload();
+        window.location.href = '../html/gameOver.html';
       }
     }
   }
@@ -282,22 +271,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
   levelUp = () => {
     if (Game.player.x <= Game.token.x + 20 && Game.player.y <= Game.token.y + 20 && Game.player.y + 30 >= Game.token.y && Game.player.x >= Game.token.x){
-      alert('Next Level!');
+      Game.score++
       Game.keysPressed = [];
-      Game.player.moveX = 0;
-      Game.player.moveY = 0;
-      Game.player.x = 30;
-      Game.player.y = 30;
-      level2();
+      window.location.href = '../html/game2.html';
     }
     if (Game.player.x + 30 >= Game.token.x && Game.player.y <= Game.token.y + 20 && Game.player.y + 30 >= Game.token.y && Game.player.x <= Game.token.x + 20){
-      alert('Next Level!');
+      Game.score++
       Game.keysPressed = [];
-      Game.player.moveX = 0;
-      Game.player.moveY = 0;
-      Game.player.x = 30;
-      Game.player.y = 30;
-      level2();
+      window.location.href = '../html/game2.html';
     }
   }
 
@@ -306,16 +287,15 @@ document.addEventListener('DOMContentLoaded', () => {
   setInterval(lives, 1);
 
   setInterval(enemyMovement1, 10);
-  window.requestAnimationFrame(enemyMovement1);
+
   setInterval(enemyMovement2, 10);
-  window.requestAnimationFrame(enemyMovement2);
+
   setInterval(enemyMovement3, 10);
-  window.requestAnimationFrame(enemyMovement3);
+
   setInterval(enemyMovement4, 10);
-  window.requestAnimationFrame(enemyMovement4);
+
   setInterval(enemyMovement5, 10);
-  window.requestAnimationFrame(enemyMovement5);
+
   setInterval(enemyMovement6, 10);
-  window.requestAnimationFrame(enemyMovement6);
 
 })
