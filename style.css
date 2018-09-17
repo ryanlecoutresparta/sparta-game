@@ -13,6 +13,61 @@ body {
   font-family: sans-serif;
 }
 
+.intro {
+  width: 70%;
+  margin-top: 40px;
+  text-align: center;
+  margin: auto;
+  font-size: 40px;
+  padding: 10px;
+  font-family: arial;
+  border: black 5px solid;
+}
+
+.cubes {
+  color: red;
+}
+
+.image {
+  margin: auto;
+  display: block;
+  width: 200px;
+  padding: 30px;
+}
+
+.buttons {
+  width: 100%;
+  margin: auto;
+  font-size: 40px;
+  margin: 30px 0px;
+  font-family: arial;
+}
+
+.playGame, .howToPlay, .highScores {
+  background-color: red;
+  border: 3px solid black;
+  font-size: 20px;
+  padding: 20px;
+  width: 200px;
+  text-align: center;
+}
+
+.playGame:hover, .howToPlay:hover, .highScores:hover {
+  background-color: blue;
+  color: white;
+}
+
+.howToPlayPage, .highScoresPage {
+  width: 70%;
+  margin-top: 40px;
+  text-align: center;
+  margin: auto;
+  font-size: 40px;
+  padding: 10px;
+  font-family: arial;
+  border: black 5px solid;
+}
+
 #canvasGame {
   margin: auto;
   display: block;

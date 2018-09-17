@@ -282,12 +282,22 @@ document.addEventListener('DOMContentLoaded', () => {
 
   levelUp = () => {
     if (Game.player.x <= Game.token.x + 20 && Game.player.y <= Game.token.y + 20 && Game.player.y + 30 >= Game.token.y && Game.player.x >= Game.token.x){
-      alert('WINNER!');
-      location.reload();
+      alert('Next Level!');
+      Game.keysPressed = [];
+      Game.player.moveX = 0;
+      Game.player.moveY = 0;
+      Game.player.x = 30;
+      Game.player.y = 30;
+      level2();
     }
     if (Game.player.x + 30 >= Game.token.x && Game.player.y <= Game.token.y + 20 && Game.player.y + 30 >= Game.token.y && Game.player.x <= Game.token.x + 20){
-      alert('WINNER!');
-      location.reload();
+      alert('Next Level!');
+      Game.keysPressed = [];
+      Game.player.moveX = 0;
+      Game.player.moveY = 0;
+      Game.player.x = 30;
+      Game.player.y = 30;
+      level2();
     }
   }
 
@@ -296,15 +306,16 @@ document.addEventListener('DOMContentLoaded', () => {
   setInterval(lives, 1);
 
   setInterval(enemyMovement1, 10);
-
+  window.requestAnimationFrame(enemyMovement1);
   setInterval(enemyMovement2, 10);
-
+  window.requestAnimationFrame(enemyMovement2);
   setInterval(enemyMovement3, 10);
-
+  window.requestAnimationFrame(enemyMovement3);
   setInterval(enemyMovement4, 10);
-
+  window.requestAnimationFrame(enemyMovement4);
   setInterval(enemyMovement5, 10);
-
+  window.requestAnimationFrame(enemyMovement5);
   setInterval(enemyMovement6, 10);
+  window.requestAnimationFrame(enemyMovement6);
 
 })
