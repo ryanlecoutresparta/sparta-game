@@ -4,19 +4,44 @@ body {
   background-color: rgb(92, 166, 238);
 }
 
-#canvasGame {
-  margin: auto;
-  display: block;
-  box-sizing: border-box;
-  background-color: rgb(93, 246, 31);
-}
-
-.levelName {
+.header {
   width: 100%;
   text-align: center;
   margin: auto;
   font-size: 50px;
   padding-bottom: 10px;
+  font-family: sans-serif;
+}
+
+#canvasGame {
+  margin: auto;
+  display: block;
+  box-sizing: border-box;
+  background-color: black;
+}
+
+.levelName {
+  width: 70%;
+  text-align: right;
+  margin: auto;
+  font-size: 30px;
+  padding-bottom: 10px;
+}
+
+.lifeCounter {
+  width: 70%;
+  margin: auto;
+  text-align: left;
+  font-size: 30px;
+  padding-bottom: 10px;
+}
+
+.footer {
+  width: 100%;
+  text-align: center;
+  margin: auto;
+  font-size: 30px;
+  padding-top: 50px;
 }
 
 @media screen and (max-width:810px) {
