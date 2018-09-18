@@ -25,6 +25,10 @@ body {
   border: black 5px solid;
 }
 
+.lifeAndTimer {
+  display: flex;
+}
+
 .cubes {
   color: red;
 }
@@ -137,21 +141,30 @@ body {
 }
 
 .levelName {
-  width: 70%;
-  text-align: right;
+  width: 100%;
+  text-align: center;
   margin: auto;
   font-size: 30px;
   padding-bottom: 10px;
   font-family: sans-serif;
 }
 
-.lifeCounter {
+.timer {
   width: 70%;
-  margin: auto;
   text-align: left;
   font-size: 30px;
   padding-bottom: 10px;
   font-family: sans-serif;
+  padding-left: 300px;
+}
+
+.lifeCounter {
+  width: 70%;
+  text-align: right;
+  font-size: 30px;
+  padding-bottom: 10px;
+  font-family: sans-serif;
+  padding-right: 300px;
 }
 
 .quitButton {

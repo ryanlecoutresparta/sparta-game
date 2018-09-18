@@ -25,15 +25,29 @@ document.addEventListener('DOMContentLoaded', () => {
   Game.interval = setInterval(Game.updateGame, 10);
   Game.player = new Component(30, 30, "cyan", 30, 30);
   Game.levelName = document.getElementsByClassName('levelName')[0];
+  Game.timer = document.getElementsByClassName('timer')[0];
+  Game.seconds = 20;
+  // Game.hundredthSecond =
   Game.livesRemaining = 3;
   Game.score = 0;
   Game.level1Play = true;
+
+  Game.timer.innerHTML = `${Game.seconds}`;
+  countdown = () => {
+    if (Game.seconds === 0) {
+      window.location.href = '../html/gameOver.html';
+    }
+    Game.seconds--;
+    Game.timer.innerHTML = `${Game.seconds}`;
+  };
+
 
   // Game.random = (array) => {
   //   let arr = (array.length) - 1
   //   let rand = Number(Math.random()*arr).toFixed();
   //   return fixed
   // }
+
 
   Game.lifeCounter = document.getElementsByClassName('lifeCounter')[0];
   lives = () => {
@@ -154,9 +168,12 @@ document.addEventListener('DOMContentLoaded', () => {
   // ======= LEVEL 1: ========
   level1 = () => {
 
+
     Game.canvas.setAttribute('id', 'canvasGame1')
     Game.token = new Component(35, 7.5, "gold", enemyArray[3][5], enemyArray[4][8]);
     Game.levelName.innerHTML = 'Level 1';
+    Game.seconds = 20;
+    Game.timer.innerHTML = `${Game.seconds}`;
 
     Game.verticalEnemyMovement(enemyArray[0][2], enemyArray[1][2], sizeSmall, enemyArray[2][3]);
     Game.verticalEnemyMovement(enemyArray[0][4], enemyArray[1][5], sizeSmall, enemyArray[2][4]);
@@ -192,6 +209,8 @@ document.addEventListener('DOMContentLoaded', () => {
     Game.levelName.innerHTML = 'Level 2';
     Game.player.x = 30;
     Game.player.y = 30;
+    Game.seconds = 20;
+    Game.timer.innerHTML = `${Game.seconds}`;
 
 
     Game.horizontalEnemyMovement(enemyArray[0][6], enemyArray[1][4], sizeSmall, enemyArray[2][6]);
@@ -225,6 +244,8 @@ document.addEventListener('DOMContentLoaded', () => {
     Game.levelName.innerHTML = 'Level 3';
     Game.player.x = 30;
     Game.player.y = 30;
+    Game.seconds = 20;
+    Game.timer.innerHTML = `${Game.seconds}`;
 
     Game.horizontalEnemyMovement(enemyArray[0][5], enemyArray[1][6], sizeSmall, enemyArray[2][3]);
     Game.verticalEnemyMovement(enemyArray[0][9], enemyArray[1][8], sizeSmall, enemyArray[2][4]);
@@ -255,6 +276,8 @@ document.addEventListener('DOMContentLoaded', () => {
     Game.levelName.innerHTML = 'Level 4';
     Game.player.x = 30;
     Game.player.y = 30;
+    Game.seconds = 20;
+    Game.timer.innerHTML = `${Game.seconds}`;
 
     Game.horizontalEnemyMovement(enemyArray[0][1], enemyArray[1][1], sizeSmall, enemyArray[2][7]);
     Game.verticalEnemyMovement(enemyArray[0][3], enemyArray[1][3], sizeSmall, enemyArray[2][3]);
@@ -285,6 +308,8 @@ document.addEventListener('DOMContentLoaded', () => {
     Game.levelName.innerHTML = 'Level 5';
     Game.player.x = 30;
     Game.player.y = 30;
+    Game.seconds = 20;
+    Game.timer.innerHTML = `${Game.seconds}`;
 
     Game.horizontalEnemyMovement(enemyArray[0][15], enemyArray[1][9], sizeSmall, enemyArray[2][6]);
     Game.verticalEnemyMovement(enemyArray[0][12], enemyArray[1][2], sizeBig, enemyArray[2][5]);
@@ -307,6 +332,10 @@ document.addEventListener('DOMContentLoaded', () => {
       levelUp()
     }, 1);
   }
+
+  setInterval(() => {
+    countdown()
+  }, 1000);
 
   setInterval(() => {
     lives()
