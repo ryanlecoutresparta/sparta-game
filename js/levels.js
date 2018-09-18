@@ -32,13 +32,13 @@ document.addEventListener('DOMContentLoaded', () => {
   Game.score = 0;
   Game.level1Play = true;
 
-  Game.timer.innerHTML = `${Game.seconds}`;
+  Game.timer.innerHTML = `Time Left: ${Game.seconds}`;
   countdown = () => {
     if (Game.seconds === 0) {
       window.location.href = '../html/gameOver.html';
     }
     Game.seconds--;
-    Game.timer.innerHTML = `${Game.seconds}`;
+    Game.timer.innerHTML = `Time Left: ${Game.seconds}`;
   };
 
 
@@ -173,7 +173,7 @@ document.addEventListener('DOMContentLoaded', () => {
     Game.token = new Component(35, 7.5, "gold", enemyArray[3][5], enemyArray[4][8]);
     Game.levelName.innerHTML = 'Level 1';
     Game.seconds = 20;
-    Game.timer.innerHTML = `${Game.seconds}`;
+    Game.timer.innerHTML = `Time Left: ${Game.seconds}`;
 
     Game.verticalEnemyMovement(enemyArray[0][2], enemyArray[1][2], sizeSmall, enemyArray[2][3]);
     Game.verticalEnemyMovement(enemyArray[0][4], enemyArray[1][5], sizeSmall, enemyArray[2][4]);
@@ -210,7 +210,7 @@ document.addEventListener('DOMContentLoaded', () => {
     Game.player.x = 30;
     Game.player.y = 30;
     Game.seconds = 20;
-    Game.timer.innerHTML = `${Game.seconds}`;
+    Game.timer.innerHTML = `Time Left: ${Game.seconds}`;
 
 
     Game.horizontalEnemyMovement(enemyArray[0][6], enemyArray[1][4], sizeSmall, enemyArray[2][6]);
@@ -245,7 +245,7 @@ document.addEventListener('DOMContentLoaded', () => {
     Game.player.x = 30;
     Game.player.y = 30;
     Game.seconds = 20;
-    Game.timer.innerHTML = `${Game.seconds}`;
+    Game.timer.innerHTML = `Time Left: ${Game.seconds}`;
 
     Game.horizontalEnemyMovement(enemyArray[0][5], enemyArray[1][6], sizeSmall, enemyArray[2][3]);
     Game.verticalEnemyMovement(enemyArray[0][9], enemyArray[1][8], sizeSmall, enemyArray[2][4]);
@@ -277,7 +277,7 @@ document.addEventListener('DOMContentLoaded', () => {
     Game.player.x = 30;
     Game.player.y = 30;
     Game.seconds = 20;
-    Game.timer.innerHTML = `${Game.seconds}`;
+    Game.timer.innerHTML = `Time Left: ${Game.seconds}`;
 
     Game.horizontalEnemyMovement(enemyArray[0][1], enemyArray[1][1], sizeSmall, enemyArray[2][7]);
     Game.verticalEnemyMovement(enemyArray[0][3], enemyArray[1][3], sizeSmall, enemyArray[2][3]);
@@ -309,7 +309,7 @@ document.addEventListener('DOMContentLoaded', () => {
     Game.player.x = 30;
     Game.player.y = 30;
     Game.seconds = 20;
-    Game.timer.innerHTML = `${Game.seconds}`;
+    Game.timer.innerHTML = `Time Left: ${Game.seconds}`;
 
     Game.horizontalEnemyMovement(enemyArray[0][15], enemyArray[1][9], sizeSmall, enemyArray[2][6]);
     Game.verticalEnemyMovement(enemyArray[0][12], enemyArray[1][2], sizeBig, enemyArray[2][5]);
