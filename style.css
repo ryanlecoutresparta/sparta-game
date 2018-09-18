@@ -27,6 +27,7 @@ body {
 
 .lifeAndTimer {
   display: flex;
+  width: 100%;
 }
 
 .cubes {
@@ -49,7 +50,10 @@ body {
 }
 
 .levelName {
-  text-decoration: underline;
+  font-weight: bold;
+  font-size: 40px;
+  font-family: monospace;
+  width: 70%;
 }
 
 .howToPlay1, .howToPlay2, .howToPlay3 {
@@ -140,31 +144,37 @@ body {
   border: black 5px solid;
 }
 
-.levelName {
-  width: 100%;
-  text-align: center;
-  margin: auto;
-  font-size: 30px;
-  padding-bottom: 10px;
-  font-family: sans-serif;
+.container1 {
+  width: 40%;
+  margin-bottom: 10px;
 }
 
-.timer {
-  width: 70%;
-  text-align: left;
+.container2 {
+  width: 20%;
+  margin-bottom: 10px;
+}
+
+.lifeCounter, .timer, .levelName {
+  margin-bottom: 10px;
+  text-align: center;
+  margin: auto;
+  border-top: 1px solid white;
+  padding-top: 10px;
+}
+
+.lifeCounter, .timer {
   font-size: 30px;
-  padding-bottom: 10px;
+  font-style: italic;
   font-family: sans-serif;
-  padding-left: 300px;
+  width: 50%;
 }
 
 .lifeCounter {
-  width: 70%;
-  text-align: right;
-  font-size: 30px;
-  padding-bottom: 10px;
-  font-family: sans-serif;
-  padding-right: 300px;
+  border-left: 1px solid white;
+}
+
+.timer {
+  border-right: 1px solid white;
 }
 
 .quitButton {
