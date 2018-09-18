@@ -46,9 +46,22 @@ body {
 
 .howToPlay1, .howToPlay2, .howToPlay3 {
   font-size: 20px;
-  width: 100%;
+  width: 50%;
   padding-top: 10px;
   text-align: center;
+  margin: auto;
+}
+
+.blue {
+  color: cyan;
+}
+
+.red {
+  color: #ff0000;
+}
+
+.gold {
+  color: gold;
 }
 
 .redSquare, .blueSquare, .goldCoin {
@@ -73,7 +86,7 @@ body {
   width: 80px;
 }
 
-.playGame, .howToPlay, .highScores {
+.playGame, .howToPlay, .highScores, .quit {
   background-color: red;
   border: 3px solid black;
   font-size: 20px;
@@ -98,11 +111,18 @@ body {
   border: black 5px solid;
 }
 
-#canvasGame {
+#canvasGame1, #canvasGame2 {
   margin: auto;
   display: block;
   box-sizing: border-box;
+}
+
+#canvasGame1 {
   background-color: black;
+}
+
+#canvasGame2 {
+  background-color: white;
 }
 
 .levelName {
@@ -124,22 +144,9 @@ body {
 }
 
 .quitButton {
-  width: 100%;
-  margin: auto;
+  display: flex;
+  justify-content: center;
   padding-top: 10px;
-}
-
-.quit {
-  margin: auto;
-  display: block;
-  background-color: red;
-  border: 3px solid black;
-  font-size: 20px;
-  padding: 15px;
-  width: 150px;
-  text-align: center;
-  font-style: normal;
-  font-family: arial;
 }
 
 .footer {
