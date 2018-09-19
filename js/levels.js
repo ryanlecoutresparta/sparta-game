@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
   Game.player = new Component(30, 30, "cyan", 30, 30);
   Game.levelName = document.getElementsByClassName('levelName')[0];
   Game.timer = document.getElementsByClassName('timer')[0];
-  Game.seconds = 20;
+  Game.seconds = 30;
   Game.livesRemaining = 3;
   Game.score = 0;
   Game.level1Play = true;
@@ -91,11 +91,11 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   let enemyArray = [
-    [100, 150, 200, 250, 300, 350, 400, 450, 500, 550, 600, 650, 700, 850], // 18
+    [150, 200, 250, 300, 350, 400, 450, 500, 550, 600, 650, 700, 750, 800, 850], // 15
     // y variables:
-    [100, 125, 150, 175, 200, 225, 250, 275, 300, 325, 350], // 15
+    [125, 150, 175, 200, 225, 250, 275, 300, 325, 350], // 10
     // size variables:
-    [40, 80, 100, 120, 140], // 4
+    [40, 80, 100, 120, 140], // 5
     // speed variables:
     [1, 2, 3, 4, 5, 6, 7, 8] // 8
   ]
@@ -201,7 +201,7 @@ document.addEventListener('DOMContentLoaded', () => {
     Game.canvas.setAttribute('id', 'canvasGame1')
     Game.token1 = new Component(35, 7.5, "gold", coinArray[0][Game.random(coinArray[0])], coinArray[1][Game.random(coinArray[1])]);
     Game.levelName.innerHTML = 'Level 1';
-    Game.seconds = 20;
+    Game.seconds = 30;
     Game.timer.innerHTML = `Time Left: ${Game.seconds}`;
 
     Game.verticalEnemyMovement(enemyArray[0][Game.random(enemyArray[0])], enemyArray[1][Game.random(enemyArray[1])], enemyArray[2][Game.random(enemyArray[2])], enemyArray[3][Game.random(enemyArray[3])]);
@@ -256,7 +256,7 @@ document.addEventListener('DOMContentLoaded', () => {
     Game.levelName.innerHTML = 'Level 2';
     Game.player.x = 30;
     Game.player.y = 30;
-    Game.seconds = 20;
+    Game.seconds = 30;
     Game.timer.innerHTML = `Time Left: ${Game.seconds}`;
 
 
@@ -337,7 +337,7 @@ document.addEventListener('DOMContentLoaded', () => {
     Game.levelName.innerHTML = 'Level 3';
     Game.player.x = 30;
     Game.player.y = 30;
-    Game.seconds = 20;
+    Game.seconds = 30;
     Game.timer.innerHTML = `Time Left: ${Game.seconds}`;
 
     Game.horizontalEnemyMovement(enemyArray[0][Game.random(enemyArray[0])], enemyArray[1][Game.random(enemyArray[1])], enemyArray[2][Game.random(enemyArray[2])], enemyArray[3][Game.random(enemyArray[3])]);
@@ -416,11 +416,10 @@ document.addEventListener('DOMContentLoaded', () => {
     Game.levelName.innerHTML = 'Level 4';
     Game.player.x = 30;
     Game.player.y = 30;
-    Game.seconds = 20;
+    Game.seconds = 30;
     Game.timer.innerHTML = `Time Left: ${Game.seconds}`;
 
     Game.horizontalEnemyMovement(enemyArray[0][Game.random(enemyArray[0])], enemyArray[1][Game.random(enemyArray[1])], enemyArray[2][Game.random(enemyArray[2])], enemyArray[3][Game.random(enemyArray[3])]);
-    Game.verticalEnemyMovement(enemyArray[0][Game.random(enemyArray[0])], enemyArray[1][Game.random(enemyArray[1])], enemyArray[2][Game.random(enemyArray[2])], enemyArray[3][Game.random(enemyArray[3])]);
 
 
     // TOKEN 1
@@ -526,10 +525,9 @@ document.addEventListener('DOMContentLoaded', () => {
     Game.levelName.innerHTML = 'Level 5';
     Game.player.x = 30;
     Game.player.y = 30;
-    Game.seconds = 20;
+    Game.seconds = 30;
     Game.timer.innerHTML = `Time Left: ${Game.seconds}`;
 
-    Game.horizontalEnemyMovement(enemyArray[0][Game.random(enemyArray[0])], enemyArray[1][Game.random(enemyArray[1])], enemyArray[2][Game.random(enemyArray[2])], enemyArray[3][Game.random(enemyArray[3])]);
     Game.verticalEnemyMovement(enemyArray[0][Game.random(enemyArray[0])], enemyArray[1][Game.random(enemyArray[1])], enemyArray[2][Game.random(enemyArray[2])], enemyArray[3][Game.random(enemyArray[3])]);
 
 
@@ -628,14 +626,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
   level6 = () => {
 
-    Game.canvas.setAttribute('id', 'canvasGame2')
+    Game.canvas.setAttribute('id', 'canvasGame3')
     Game.token1 = new Component(35, 7.5, "gold", coinArray[0][Game.random(coinArray[0])], coinArray[1][Game.random(coinArray[1])]);
     Game.token2 = new Component(35, 7.5, "gold", coinArray[0][Game.random(coinArray[0])], coinArray[1][Game.random(coinArray[1])]);
     Game.token3 = new Component(35, 7.5, "gold", coinArray[0][Game.random(coinArray[0])], coinArray[1][Game.random(coinArray[1])]);
-    Game.levelName.innerHTML = 'Level 5';
+    Game.levelName.innerHTML = 'Level 6';
     Game.player.x = 30;
     Game.player.y = 30;
-    Game.seconds = 20;
+    Game.seconds = 30;
     Game.timer.innerHTML = `Time Left: ${Game.seconds}`;
 
     Game.horizontalEnemyMovement(enemyArray[0][Game.random(enemyArray[0])], enemyArray[1][Game.random(enemyArray[1])], enemyArray[2][Game.random(enemyArray[2])], enemyArray[3][Game.random(enemyArray[3])]);
@@ -735,14 +733,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
   level7 = () => {
 
-    Game.canvas.setAttribute('id', 'canvasGame2')
+    Game.canvas.setAttribute('id', 'canvasGame1')
     Game.token1 = new Component(35, 7.5, "gold", coinArray[0][Game.random(coinArray[0])], coinArray[1][Game.random(coinArray[1])]);
     Game.token2 = new Component(35, 7.5, "gold", coinArray[0][Game.random(coinArray[0])], coinArray[1][Game.random(coinArray[1])]);
     Game.token3 = new Component(35, 7.5, "gold", coinArray[0][Game.random(coinArray[0])], coinArray[1][Game.random(coinArray[1])]);
-    Game.levelName.innerHTML = 'Level 5';
+    Game.levelName.innerHTML = 'Level 7';
     Game.player.x = 30;
     Game.player.y = 30;
-    Game.seconds = 20;
+    Game.seconds = 30;
     Game.timer.innerHTML = `Time Left: ${Game.seconds}`;
 
     Game.verticalEnemyMovement(enemyArray[0][Game.random(enemyArray[0])], enemyArray[1][Game.random(enemyArray[1])], enemyArray[2][Game.random(enemyArray[2])], enemyArray[3][Game.random(enemyArray[3])]);
@@ -847,10 +845,10 @@ document.addEventListener('DOMContentLoaded', () => {
     Game.token1 = new Component(35, 7.5, "gold", coinArray[0][Game.random(coinArray[0])], coinArray[1][Game.random(coinArray[1])]);
     Game.token2 = new Component(35, 7.5, "gold", coinArray[0][Game.random(coinArray[0])], coinArray[1][Game.random(coinArray[1])]);
     Game.token3 = new Component(35, 7.5, "gold", coinArray[0][Game.random(coinArray[0])], coinArray[1][Game.random(coinArray[1])]);
-    Game.levelName.innerHTML = 'Level 5';
+    Game.levelName.innerHTML = 'Level 8';
     Game.player.x = 30;
     Game.player.y = 30;
-    Game.seconds = 20;
+    Game.seconds = 30;
     Game.timer.innerHTML = `Time Left: ${Game.seconds}`;
 
     Game.horizontalEnemyMovement(enemyArray[0][Game.random(enemyArray[0])], enemyArray[1][Game.random(enemyArray[1])], enemyArray[2][Game.random(enemyArray[2])], enemyArray[3][Game.random(enemyArray[3])]);
@@ -950,14 +948,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
   level9 = () => {
 
-    Game.canvas.setAttribute('id', 'canvasGame2')
+    Game.canvas.setAttribute('id', 'canvasGame3')
     Game.token1 = new Component(35, 7.5, "gold", coinArray[0][Game.random(coinArray[0])], coinArray[1][Game.random(coinArray[1])]);
     Game.token2 = new Component(35, 7.5, "gold", coinArray[0][Game.random(coinArray[0])], coinArray[1][Game.random(coinArray[1])]);
     Game.token3 = new Component(35, 7.5, "gold", coinArray[0][Game.random(coinArray[0])], coinArray[1][Game.random(coinArray[1])]);
-    Game.levelName.innerHTML = 'Level 5';
+    Game.levelName.innerHTML = 'Level 9';
     Game.player.x = 30;
     Game.player.y = 30;
-    Game.seconds = 20;
+    Game.seconds = 30;
     Game.timer.innerHTML = `Time Left: ${Game.seconds}`;
 
     Game.verticalEnemyMovement(enemyArray[0][Game.random(enemyArray[0])], enemyArray[1][Game.random(enemyArray[1])], enemyArray[2][Game.random(enemyArray[2])], enemyArray[3][Game.random(enemyArray[3])]);
@@ -1058,14 +1056,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
   level10 = () => {
 
-    Game.canvas.setAttribute('id', 'canvasGame2')
+    Game.canvas.setAttribute('id', 'canvasGame1')
     Game.token1 = new Component(35, 7.5, "gold", coinArray[0][Game.random(coinArray[0])], coinArray[1][Game.random(coinArray[1])]);
     Game.token2 = new Component(35, 7.5, "gold", coinArray[0][Game.random(coinArray[0])], coinArray[1][Game.random(coinArray[1])]);
     Game.token3 = new Component(35, 7.5, "gold", coinArray[0][Game.random(coinArray[0])], coinArray[1][Game.random(coinArray[1])]);
-    Game.levelName.innerHTML = 'Level 5';
+    Game.levelName.innerHTML = 'Level 10';
     Game.player.x = 30;
     Game.player.y = 30;
-    Game.seconds = 20;
+    Game.seconds = 30;
     Game.timer.innerHTML = `Time Left: ${Game.seconds}`;
 
     Game.horizontalEnemyMovement(enemyArray[0][Game.random(enemyArray[0])], enemyArray[1][Game.random(enemyArray[1])], enemyArray[2][Game.random(enemyArray[2])], enemyArray[3][Game.random(enemyArray[3])]);
