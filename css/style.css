@@ -56,7 +56,7 @@ body {
   width: 70%;
 }
 
-.howToPlay1, .howToPlay2, .howToPlay3 {
+.howToPlay1, .howToPlay2, .howToPlay3, .howToPlay4 {
   font-size: 20px;
   width: 50%;
   padding-top: 10px;
@@ -91,7 +91,6 @@ body {
   height: 80px;
   width: 70px;
 }
-
 
 .goldCoin {
   height: 60px;
@@ -191,6 +190,10 @@ body {
   width: 100px;
   text-align: center;
   height: 50px;
+}
+
+.youLose {
+  padding-top: 30px;
 }
 
 .footer {

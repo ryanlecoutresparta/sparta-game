@@ -7,25 +7,33 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Squares - Game Over!</title>
   <link rel="stylesheet" href="../css/style.css">
+  <script src="../js/sound.js" charset="utf-8"></script>
 
 </head>
 <body>
 
-<header class="header">Squares</header>
+    <iframe src="../sound/277019__sandermotions__applause-4 (1).wav" allow="autoplay" style="display:none" id="iFrameAudio">
+    </iframe>
 
-<div class="youLose">UNLUCKY - YOU LOSE!
+    <audio autoplay id="playAudio">
+      <source src="../sound/277019__sandermotions__applause-4 (1).wav">
+    </audio>
 
-  <div class="displayScore"></div>
+    <header class="header">Squares</header>
+
+    <div class="youLose">UNLUCKY - YOU LOSE!
+
+      <div class="displayScore"></div>
 
 
-  <div class="buttons">
-    <a href="index.html"><button class="playGame" type="button">BACK TO THE TITLE PAGE</button></a>
-  </div>
+      <div class="buttons">
+        <a href="index.html"><button class="playGame" type="button">BACK TO THE TITLE PAGE</button></a>
+      </div>
 
-</div>
+    </div>
 
 
-<footer class="footer">&copy; 2018 Ryan Lecoutre</footer>
+    <footer class="footer">&copy; 2018 Ryan Lecoutre</footer>
 
-</body>
-</html>
+  </body>
+  </html>

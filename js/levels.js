@@ -12,7 +12,9 @@ document.addEventListener('DOMContentLoaded', () => {
     if (Game.keysPressed && Game.keysPressed[40] && (Game.player.y<470)) {Game.player.moveY = 2;}
     Game.player.newPos();
     Game.player.update();
-    Game.token.update();
+    Game.token1.update();
+    Game.token2.update();
+    Game.token3.update();
   };
 
   clear = () => {
@@ -30,6 +32,7 @@ document.addEventListener('DOMContentLoaded', () => {
   Game.livesRemaining = 3;
   Game.score = 0;
   Game.level1Play = true;
+  Game.tokensCollected = 0;
 
   Game.timer.innerHTML = `Time Left: ${Game.seconds}`;
   countdown = () => {
@@ -45,6 +48,15 @@ document.addEventListener('DOMContentLoaded', () => {
     let rand = Math.floor(Math.random()*arr);
     return rand;
   }
+
+  squaresSounds = (src) => {
+    let audio = document.createElement('audio');
+    audio.src = src;
+    return audio;
+  }
+
+  let lostLife = squaresSounds('../sound/172334__knova__grenade-knova.wav');
+  let coinGet = squaresSounds('../sound/242857__plasterbrain__coin-get.ogg');
 
   Game.lifeCounter = document.getElementsByClassName('lifeCounter')[0];
   lives = () => {
@@ -79,11 +91,11 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   let enemyArray = [
-    [100, 150, 200, 250, 300, 350, 400, 450, 500, 550, 600, 650, 700, 850, 900], // 18
+    [100, 150, 200, 250, 300, 350, 400, 450, 500, 550, 600, 650, 700, 850], // 18
     // y variables:
-    [100, 125, 150, 175, 200, 225, 250, 275, 300, 325, 350, 375, 425, 450], // 15
+    [100, 125, 150, 175, 200, 225, 250, 275, 300, 325, 350], // 15
     // size variables:
-    [40, 80, 100, 120], // 4
+    [40, 80, 100, 120, 140], // 4
     // speed variables:
     [1, 2, 3, 4, 5, 6, 7, 8] // 8
   ]
@@ -109,19 +121,29 @@ document.addEventListener('DOMContentLoaded', () => {
       }
       y = y + dy;
       if (Game.player.x <= x + size && Game.player.y <= y + size && Game.player.y + 30 >= y && Game.player.x >= x){
+        lostLife.play();
         Game.player.x = 30;
         Game.player.y = 30;
         Game.livesRemaining--;
         if (Game.livesRemaining === 0) {
-          window.location.href = '../html/gameOver.html';
+          Game.player.x = 10000;
+          Game.player.y = 10000;
+          setTimeout(youLose = () => {
+            window.location.href = '../html/gameOver.html'
+          }, 1900);
         }
       }
       if (Game.player.x + 30 >= x && Game.player.y <= y + size && Game.player.y + 30 >= y && Game.player.x + 30 <= x + size){
+        lostLife.play();
         Game.player.x = 30;
         Game.player.y = 30;
         Game.livesRemaining--;
         if (Game.livesRemaining === 0) {
-          window.location.href = '../html/gameOver.html';
+          Game.player.x = 10000;
+          Game.player.y = 10000;
+          setTimeout(youLose = () => {
+            window.location.href = '../html/gameOver.html'
+          }, 1900);
         }
       }
     }
@@ -143,19 +165,29 @@ document.addEventListener('DOMContentLoaded', () => {
       x += dx;
 
       if (Game.player.y <= y + size && Game.player.x <= x + size && Game.player.x + 30 >= x && Game.player.y >= y){
+        lostLife.play();
         Game.player.x = 30;
         Game.player.y = 30;
         Game.livesRemaining--;
         if (Game.livesRemaining === 0) {
-          window.location.href = '../html/gameOver.html';
+          Game.player.x = 10000;
+          Game.player.y = 10000;
+          setTimeout(youLose = () => {
+            window.location.href = '../html/gameOver.html'
+          }, 1900);
         }
       }
       if (Game.player.y + 30 >= y && Game.player.x <= x + size && Game.player.x + 30 >= x && Game.player.y + 30 <= y + size){
+        lostLife.play();
         Game.player.x = 30;
         Game.player.y = 30;
         Game.livesRemaining--;
         if (Game.livesRemaining === 0) {
-          window.location.href = '../html/gameOver.html';
+          Game.player.x = 10000;
+          Game.player.y = 10000;
+          setTimeout(youLose = () => {
+            window.location.href = '../html/gameOver.html'
+          }, 1900);
         }
       }
     }
@@ -167,7 +199,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     Game.canvas.setAttribute('id', 'canvasGame1')
-    Game.token = new Component(35, 7.5, "gold", coinArray[0][Game.random(coinArray[0])], coinArray[1][Game.random(coinArray[1])]);
+    Game.token1 = new Component(35, 7.5, "gold", coinArray[0][Game.random(coinArray[0])], coinArray[1][Game.random(coinArray[1])]);
     Game.levelName.innerHTML = 'Level 1';
     Game.seconds = 20;
     Game.timer.innerHTML = `Time Left: ${Game.seconds}`;
@@ -175,34 +207,52 @@ document.addEventListener('DOMContentLoaded', () => {
     Game.verticalEnemyMovement(enemyArray[0][Game.random(enemyArray[0])], enemyArray[1][Game.random(enemyArray[1])], enemyArray[2][Game.random(enemyArray[2])], enemyArray[3][Game.random(enemyArray[3])]);
     Game.verticalEnemyMovement(enemyArray[0][Game.random(enemyArray[0])], enemyArray[1][Game.random(enemyArray[1])], enemyArray[2][Game.random(enemyArray[2])], enemyArray[3][Game.random(enemyArray[3])]);
 
-    levelUp = () => {
-      if (Game.player.x <= Game.token.x + 35 && Game.player.y <= Game.token.y + 7.5 && Game.player.y + 30 >= Game.token.y && Game.player.x >= Game.token.x){
-        Game.score++
-        Game.keysPressed = [];
-        level2();
-      }
-      if (Game.player.x + 30 >= Game.token.x && Game.player.y <= Game.token.y + 7.5 && Game.player.y + 30 >= Game.token.y && Game.player.x <= Game.token.x + 35){
-        Game.score++
-        Game.keysPressed = [];
-        level2();
-      }
-    }
+    // TOKEN 1
+        levelUp1 = () => {
+          if (Game.player.x <= Game.token1.x + 35 && Game.player.y <= Game.token1.y + 7.5 && Game.player.y + 30 >= Game.token1.y && Game.player.x >= Game.token1.x){
+            coinGet.play();
+            Game.score++
+            Game.keysPressed = [];
+            Game.tokensCollected++;
+            Game.token1.x = 10000;
+            Game.token1.y = 10000;
+            if (Game.tokensCollected === 1) {
+              Game.tokensCollected = 0;
+              level2();
+            }
+          }
+          if (Game.player.x + 30 >= Game.token1.x && Game.player.y <= Game.token1.y + 7.5 && Game.player.y + 30 >= Game.token1.y && Game.player.x <= Game.token1.x + 35){
+            coinGet.play();
+            Game.score++
+            Game.keysPressed = [];
+            Game.tokensCollected++;
+            Game.token1.x = 10000;
+            Game.token1.y = 10000;
+            if (Game.tokensCollected === 1) {
+              Game.tokensCollected = 0;
+              level2();
+            }
+          }
+        }
 
-    setInterval(() => {
-      levelUp()
-    }, 1);
+        setInterval(() => {
+          levelUp1()
+        }, 1);
 
   }
 
   if (Game.level1Play === true) {
     level1();
   }
+
+
   //======== LEVEL 2: =========
 
   level2 = () => {
 
     Game.canvas.setAttribute('id', 'canvasGame2')
-    Game.token = new Component(35, 7.5, "gold", coinArray[0][Game.random(coinArray[0])], coinArray[1][Game.random(coinArray[1])]);
+    Game.token1 = new Component(35, 7.5, "gold", coinArray[0][Game.random(coinArray[0])], coinArray[1][Game.random(coinArray[1])]);
+    Game.token2 = new Component(35, 7.5, "gold", coinArray[0][Game.random(coinArray[0])], coinArray[1][Game.random(coinArray[1])]);
     Game.levelName.innerHTML = 'Level 2';
     Game.player.x = 30;
     Game.player.y = 30;
@@ -213,21 +263,67 @@ document.addEventListener('DOMContentLoaded', () => {
     Game.horizontalEnemyMovement(enemyArray[0][Game.random(enemyArray[0])], enemyArray[1][Game.random(enemyArray[1])], enemyArray[2][Game.random(enemyArray[2])], enemyArray[3][Game.random(enemyArray[3])]);
     Game.horizontalEnemyMovement(enemyArray[0][Game.random(enemyArray[0])], enemyArray[1][Game.random(enemyArray[1])], enemyArray[2][Game.random(enemyArray[2])], enemyArray[3][Game.random(enemyArray[3])]);
 
-    levelUp = () => {
-      if (Game.player.x <= Game.token.x + 35 && Game.player.y <= Game.token.y + 7.5 && Game.player.y + 30 >= Game.token.y && Game.player.x >= Game.token.x){
+// TOKEN 1
+    levelUp1 = () => {
+      if (Game.player.x <= Game.token1.x + 35 && Game.player.y <= Game.token1.y + 7.5 && Game.player.y + 30 >= Game.token1.y && Game.player.x >= Game.token1.x){
+        coinGet.play();
         Game.score++
         Game.keysPressed = [];
-        level3();
+        Game.tokensCollected++;
+        Game.token1.x = 10000;
+        Game.token1.y = 10000;
+        if (Game.tokensCollected === 2) {
+          Game.tokensCollected = 0;
+          level3();
+        }
       }
-      if (Game.player.x + 30 >= Game.token.x && Game.player.y <= Game.token.y + 7.5 && Game.player.y + 30 >= Game.token.y && Game.player.x <= Game.token.x + 35){
+      if (Game.player.x + 30 >= Game.token1.x && Game.player.y <= Game.token1.y + 7.5 && Game.player.y + 30 >= Game.token1.y && Game.player.x <= Game.token1.x + 35){
+        coinGet.play();
         Game.score++
         Game.keysPressed = [];
-        level3();
+        Game.tokensCollected++;
+        Game.token1.x = 10000;
+        Game.token1.y = 10000;
+        if (Game.tokensCollected === 2) {
+          Game.tokensCollected = 0;
+          level3();
+        }
+      }
+    }
+
+  // TOKEN 2
+    levelUp2 = () => {
+      if (Game.player.x <= Game.token2.x + 35 && Game.player.y <= Game.token2.y + 7.5 && Game.player.y + 30 >= Game.token2.y && Game.player.x >= Game.token2.x){
+        coinGet.play();
+        Game.score++
+        Game.keysPressed = [];
+        Game.tokensCollected++;
+        Game.token2.x = 10000;
+        Game.token2.y = 10000;
+        if (Game.tokensCollected === 2) {
+          Game.tokensCollected = 0;
+          level3();
+        }
+      }
+      if (Game.player.x + 30 >= Game.token2.x && Game.player.y <= Game.token2.y + 7.5 && Game.player.y + 30 >= Game.token2.y && Game.player.x <= Game.token2.x + 35){
+        coinGet.play();
+        Game.score++
+        Game.keysPressed = [];
+        Game.tokensCollected++;
+        Game.token2.x = 10000;
+        Game.token2.y = 10000;
+        if (Game.tokensCollected === 2) {
+          Game.tokensCollected = 0;
+          level3();
+        }
       }
     }
 
     setInterval(() => {
-      levelUp()
+      levelUp1()
+    }, 1);
+    setInterval(() => {
+      levelUp2()
     }, 1);
   }
 
@@ -236,7 +332,8 @@ document.addEventListener('DOMContentLoaded', () => {
   level3 = () => {
 
     Game.canvas.setAttribute('id', 'canvasGame3')
-    Game.token = new Component(35, 7.5, "gold", coinArray[0][Game.random(coinArray[0])], coinArray[1][Game.random(coinArray[1])]);
+    Game.token1 = new Component(35, 7.5, "gold", coinArray[0][Game.random(coinArray[0])], coinArray[1][Game.random(coinArray[1])]);
+    Game.token2 = new Component(35, 7.5, "gold", coinArray[0][Game.random(coinArray[0])], coinArray[1][Game.random(coinArray[1])]);
     Game.levelName.innerHTML = 'Level 3';
     Game.player.x = 30;
     Game.player.y = 30;
@@ -247,28 +344,75 @@ document.addEventListener('DOMContentLoaded', () => {
     Game.verticalEnemyMovement(enemyArray[0][Game.random(enemyArray[0])], enemyArray[1][Game.random(enemyArray[1])], enemyArray[2][Game.random(enemyArray[2])], enemyArray[3][Game.random(enemyArray[3])]);
 
 
-    levelUp = () => {
-      if (Game.player.x <= Game.token.x + 35 && Game.player.y <= Game.token.y + 7.5 && Game.player.y + 30 >= Game.token.y && Game.player.x >= Game.token.x){
+    // TOKEN 1
+    levelUp1 = () => {
+      if (Game.player.x <= Game.token1.x + 35 && Game.player.y <= Game.token1.y + 7.5 && Game.player.y + 30 >= Game.token1.y && Game.player.x >= Game.token1.x){
+        coinGet.play();
         Game.score++
         Game.keysPressed = [];
-        level4();
+        Game.tokensCollected++;
+        Game.token1.x = 10000;
+        Game.token1.y = 10000;
+        if (Game.tokensCollected === 2) {
+          Game.tokensCollected = 0;
+          level4();
+        }
       }
-      if (Game.player.x + 30 >= Game.token.x && Game.player.y <= Game.token.y + 7.5 && Game.player.y + 30 >= Game.token.y && Game.player.x <= Game.token.x + 35){
+      if (Game.player.x + 30 >= Game.token1.x && Game.player.y <= Game.token1.y + 7.5 && Game.player.y + 30 >= Game.token1.y && Game.player.x <= Game.token1.x + 35){
+        coinGet.play();
         Game.score++
         Game.keysPressed = [];
-        level4();
+        Game.tokensCollected++;
+        Game.token1.x = 10000;
+        Game.token1.y = 10000;
+        if (Game.tokensCollected === 2) {
+          Game.tokensCollected = 0;
+          level4();
+        }
       }
     }
+    // TOKEN 2
+      levelUp2 = () => {
+        if (Game.player.x <= Game.token2.x + 35 && Game.player.y <= Game.token2.y + 7.5 && Game.player.y + 30 >= Game.token2.y && Game.player.x >= Game.token2.x){
+          coinGet.play();
+          Game.score++
+          Game.keysPressed = [];
+          Game.tokensCollected++;
+          Game.token2.x = 10000;
+          Game.token2.y = 10000;
+          if (Game.tokensCollected === 2) {
+            Game.tokensCollected = 0;
+            level4();
+          }
+        }
+        if (Game.player.x + 30 >= Game.token2.x && Game.player.y <= Game.token2.y + 7.5 && Game.player.y + 30 >= Game.token2.y && Game.player.x <= Game.token2.x + 35){
+          coinGet.play();
+          Game.score++
+          Game.keysPressed = [];
+          Game.tokensCollected++;
+          Game.token2.x = 10000;
+          Game.token2.y = 10000;
+          if (Game.tokensCollected === 2) {
+            Game.tokensCollected = 0;
+            level4();
+          }
+        }
+      }
 
     setInterval(() => {
-      levelUp()
+      levelUp1()
+    }, 1);
+    setInterval(() => {
+      levelUp2()
     }, 1);
   }
 
   level4 = () => {
 
     Game.canvas.setAttribute('id', 'canvasGame1')
-    Game.token = new Component(35, 7.5, "gold", coinArray[0][Game.random(coinArray[0])], coinArray[1][Game.random(coinArray[1])]);
+    Game.token1 = new Component(35, 7.5, "gold", coinArray[0][Game.random(coinArray[0])], coinArray[1][Game.random(coinArray[1])]);
+    Game.token2 = new Component(35, 7.5, "gold", coinArray[0][Game.random(coinArray[0])], coinArray[1][Game.random(coinArray[1])]);
+    Game.token3 = new Component(35, 7.5, "gold", coinArray[0][Game.random(coinArray[0])], coinArray[1][Game.random(coinArray[1])]);
     Game.levelName.innerHTML = 'Level 4';
     Game.player.x = 30;
     Game.player.y = 30;
@@ -279,28 +423,106 @@ document.addEventListener('DOMContentLoaded', () => {
     Game.verticalEnemyMovement(enemyArray[0][Game.random(enemyArray[0])], enemyArray[1][Game.random(enemyArray[1])], enemyArray[2][Game.random(enemyArray[2])], enemyArray[3][Game.random(enemyArray[3])]);
 
 
-    levelUp = () => {
-      if (Game.player.x <= Game.token.x + 35 && Game.player.y <= Game.token.y + 7.5 && Game.player.y + 30 >= Game.token.y && Game.player.x >= Game.token.x){
+    // TOKEN 1
+    levelUp1 = () => {
+      if (Game.player.x <= Game.token1.x + 35 && Game.player.y <= Game.token1.y + 7.5 && Game.player.y + 30 >= Game.token1.y && Game.player.x >= Game.token1.x){
+        coinGet.play();
         Game.score++
         Game.keysPressed = [];
-        level5();
+        Game.tokensCollected++;
+        Game.token1.x = 10000;
+        Game.token1.y = 10000;
+        if (Game.tokensCollected === 3) {
+          Game.tokensCollected = 0;
+          level5();
+        }
       }
-      if (Game.player.x + 30 >= Game.token.x && Game.player.y <= Game.token.y + 7.5 && Game.player.y + 30 >= Game.token.y && Game.player.x <= Game.token.x + 35){
+      if (Game.player.x + 30 >= Game.token1.x && Game.player.y <= Game.token1.y + 7.5 && Game.player.y + 30 >= Game.token1.y && Game.player.x <= Game.token1.x + 35){
+        coinGet.play();
         Game.score++
         Game.keysPressed = [];
-        level5();
+        Game.tokensCollected++;
+        Game.token1.x = 10000;
+        Game.token1.y = 10000;
+        if (Game.tokensCollected === 3) {
+          Game.tokensCollected = 0;
+          level5();
+        }
       }
     }
+    // TOKEN 2
+      levelUp2 = () => {
+        if (Game.player.x <= Game.token2.x + 35 && Game.player.y <= Game.token2.y + 7.5 && Game.player.y + 30 >= Game.token2.y && Game.player.x >= Game.token2.x){
+          coinGet.play();
+          Game.score++
+          Game.keysPressed = [];
+          Game.tokensCollected++;
+          Game.token2.x = 10000;
+          Game.token2.y = 10000;
+          if (Game.tokensCollected === 3) {
+            Game.tokensCollected = 0;
+            level5();
+          }
+        }
+        if (Game.player.x + 30 >= Game.token2.x && Game.player.y <= Game.token2.y + 7.5 && Game.player.y + 30 >= Game.token2.y && Game.player.x <= Game.token2.x + 35){
+          coinGet.play();
+          Game.score++
+          Game.keysPressed = [];
+          Game.tokensCollected++;
+          Game.token2.x = 10000;
+          Game.token2.y = 10000;
+          if (Game.tokensCollected === 3) {
+            Game.tokensCollected = 0;
+            level5();
+          }
+        }
+      }
+      // TOKEN 3
+        levelUp3 = () => {
+          if (Game.player.x <= Game.token3.x + 35 && Game.player.y <= Game.token3.y + 7.5 && Game.player.y + 30 >= Game.token3.y && Game.player.x >= Game.token3.x){
+            coinGet.play();
+            Game.score++
+            Game.keysPressed = [];
+            Game.tokensCollected++;
+            Game.token3.x = 10000;
+            Game.token3.y = 10000;
+            if (Game.tokensCollected === 3) {
+              Game.tokensCollected = 0;
+              level5();
+            }
+          }
+          if (Game.player.x + 30 >= Game.token3.x && Game.player.y <= Game.token3.y + 7.5 && Game.player.y + 30 >= Game.token3.y && Game.player.x <= Game.token3.x + 35){
+            coinGet.play();
+            Game.score++
+            Game.keysPressed = [];
+            Game.tokensCollected++;
+            Game.token3.x = 10000;
+            Game.token3.y = 10000;
+            if (Game.tokensCollected === 3) {
+              Game.tokensCollected = 0;
+              level5();
+            }
+          }
+        }
 
     setInterval(() => {
-      levelUp()
+      levelUp1()
+    }, 1);
+    setInterval(() => {
+      levelUp2()
+    }, 1);
+    setInterval(() => {
+      levelUp3()
     }, 1);
   }
+
 
   level5 = () => {
 
     Game.canvas.setAttribute('id', 'canvasGame2')
-    Game.token = new Component(35, 7.5, "gold", coinArray[0][Game.random(coinArray[0])], coinArray[1][Game.random(coinArray[1])]);
+    Game.token1 = new Component(35, 7.5, "gold", coinArray[0][Game.random(coinArray[0])], coinArray[1][Game.random(coinArray[1])]);
+    Game.token2 = new Component(35, 7.5, "gold", coinArray[0][Game.random(coinArray[0])], coinArray[1][Game.random(coinArray[1])]);
+    Game.token3 = new Component(35, 7.5, "gold", coinArray[0][Game.random(coinArray[0])], coinArray[1][Game.random(coinArray[1])]);
     Game.levelName.innerHTML = 'Level 5';
     Game.player.x = 30;
     Game.player.y = 30;
@@ -311,21 +533,639 @@ document.addEventListener('DOMContentLoaded', () => {
     Game.verticalEnemyMovement(enemyArray[0][Game.random(enemyArray[0])], enemyArray[1][Game.random(enemyArray[1])], enemyArray[2][Game.random(enemyArray[2])], enemyArray[3][Game.random(enemyArray[3])]);
 
 
-    levelUp = () => {
-      if (Game.player.x <= Game.token.x + 35 && Game.player.y <= Game.token.y + 7.5 && Game.player.y + 30 >= Game.token.y && Game.player.x >= Game.token.x){
+    // TOKEN 1
+    levelUp1 = () => {
+      if (Game.player.x <= Game.token1.x + 35 && Game.player.y <= Game.token1.y + 7.5 && Game.player.y + 30 >= Game.token1.y && Game.player.x >= Game.token1.x){
+        coinGet.play();
         Game.score++
         Game.keysPressed = [];
-        level6();
+        Game.tokensCollected++;
+        Game.token1.x = 10000;
+        Game.token1.y = 10000;
+        if (Game.tokensCollected === 3) {
+          Game.tokensCollected = 0;
+          level6();
+        }
       }
-      if (Game.player.x + 30 >= Game.token.x && Game.player.y <= Game.token.y + 7.5 && Game.player.y + 30 >= Game.token.y && Game.player.x <= Game.token.x + 35){
+      if (Game.player.x + 30 >= Game.token1.x && Game.player.y <= Game.token1.y + 7.5 && Game.player.y + 30 >= Game.token1.y && Game.player.x <= Game.token1.x + 35){
+        coinGet.play();
         Game.score++
         Game.keysPressed = [];
-        level6();
+        Game.tokensCollected++;
+        Game.token1.x = 10000;
+        Game.token1.y = 10000;
+        if (Game.tokensCollected === 3) {
+          Game.tokensCollected = 0;
+          level6();
+        }
       }
     }
+    // TOKEN 2
+      levelUp2 = () => {
+        if (Game.player.x <= Game.token2.x + 35 && Game.player.y <= Game.token2.y + 7.5 && Game.player.y + 30 >= Game.token2.y && Game.player.x >= Game.token2.x){
+          coinGet.play();
+          Game.score++
+          Game.keysPressed = [];
+          Game.tokensCollected++;
+          Game.token2.x = 10000;
+          Game.token2.y = 10000;
+          if (Game.tokensCollected === 3) {
+            Game.tokensCollected = 0;
+            level6();
+          }
+        }
+        if (Game.player.x + 30 >= Game.token2.x && Game.player.y <= Game.token2.y + 7.5 && Game.player.y + 30 >= Game.token2.y && Game.player.x <= Game.token2.x + 35){
+          coinGet.play();
+          Game.score++
+          Game.keysPressed = [];
+          Game.tokensCollected++;
+          Game.token2.x = 10000;
+          Game.token2.y = 10000;
+          if (Game.tokensCollected === 3) {
+            Game.tokensCollected = 0;
+            level6();
+          }
+        }
+      }
+      // TOKEN 3
+        levelUp3 = () => {
+          if (Game.player.x <= Game.token3.x + 35 && Game.player.y <= Game.token3.y + 7.5 && Game.player.y + 30 >= Game.token3.y && Game.player.x >= Game.token3.x){
+            coinGet.play();
+            Game.score++
+            Game.keysPressed = [];
+            Game.tokensCollected++;
+            Game.token3.x = 10000;
+            Game.token3.y = 10000;
+            if (Game.tokensCollected === 3) {
+              Game.tokensCollected = 0;
+              level6();
+            }
+          }
+          if (Game.player.x + 30 >= Game.token3.x && Game.player.y <= Game.token3.y + 7.5 && Game.player.y + 30 >= Game.token3.y && Game.player.x <= Game.token3.x + 35){
+            coinGet.play();
+            Game.score++
+            Game.keysPressed = [];
+            Game.tokensCollected++;
+            Game.token3.x = 10000;
+            Game.token3.y = 10000;
+            if (Game.tokensCollected === 3) {
+              Game.tokensCollected = 0;
+              level6();
+            }
+          }
+        }
 
     setInterval(() => {
-      levelUp()
+      levelUp1()
+    }, 1);
+    setInterval(() => {
+      levelUp2()
+    }, 1);
+    setInterval(() => {
+      levelUp3()
+    }, 1);
+  }
+
+  level6 = () => {
+
+    Game.canvas.setAttribute('id', 'canvasGame2')
+    Game.token1 = new Component(35, 7.5, "gold", coinArray[0][Game.random(coinArray[0])], coinArray[1][Game.random(coinArray[1])]);
+    Game.token2 = new Component(35, 7.5, "gold", coinArray[0][Game.random(coinArray[0])], coinArray[1][Game.random(coinArray[1])]);
+    Game.token3 = new Component(35, 7.5, "gold", coinArray[0][Game.random(coinArray[0])], coinArray[1][Game.random(coinArray[1])]);
+    Game.levelName.innerHTML = 'Level 5';
+    Game.player.x = 30;
+    Game.player.y = 30;
+    Game.seconds = 20;
+    Game.timer.innerHTML = `Time Left: ${Game.seconds}`;
+
+    Game.horizontalEnemyMovement(enemyArray[0][Game.random(enemyArray[0])], enemyArray[1][Game.random(enemyArray[1])], enemyArray[2][Game.random(enemyArray[2])], enemyArray[3][Game.random(enemyArray[3])]);
+
+    // TOKEN 1
+    levelUp1 = () => {
+      if (Game.player.x <= Game.token1.x + 35 && Game.player.y <= Game.token1.y + 7.5 && Game.player.y + 30 >= Game.token1.y && Game.player.x >= Game.token1.x){
+        coinGet.play();
+        Game.score++
+        Game.keysPressed = [];
+        Game.tokensCollected++;
+        Game.token1.x = 10000;
+        Game.token1.y = 10000;
+        if (Game.tokensCollected === 3) {
+          Game.tokensCollected = 0;
+          level7();
+        }
+      }
+      if (Game.player.x + 30 >= Game.token1.x && Game.player.y <= Game.token1.y + 7.5 && Game.player.y + 30 >= Game.token1.y && Game.player.x <= Game.token1.x + 35){
+        coinGet.play();
+        Game.score++
+        Game.keysPressed = [];
+        Game.tokensCollected++;
+        Game.token1.x = 10000;
+        Game.token1.y = 10000;
+        if (Game.tokensCollected === 3) {
+          Game.tokensCollected = 0;
+          level7();
+        }
+      }
+    }
+    // TOKEN 2
+      levelUp2 = () => {
+        if (Game.player.x <= Game.token2.x + 35 && Game.player.y <= Game.token2.y + 7.5 && Game.player.y + 30 >= Game.token2.y && Game.player.x >= Game.token2.x){
+          coinGet.play();
+          Game.score++
+          Game.keysPressed = [];
+          Game.tokensCollected++;
+          Game.token2.x = 10000;
+          Game.token2.y = 10000;
+          if (Game.tokensCollected === 3) {
+            Game.tokensCollected = 0;
+            level7();
+          }
+        }
+        if (Game.player.x + 30 >= Game.token2.x && Game.player.y <= Game.token2.y + 7.5 && Game.player.y + 30 >= Game.token2.y && Game.player.x <= Game.token2.x + 35){
+          coinGet.play();
+          Game.score++
+          Game.keysPressed = [];
+          Game.tokensCollected++;
+          Game.token2.x = 10000;
+          Game.token2.y = 10000;
+          if (Game.tokensCollected === 3) {
+            Game.tokensCollected = 0;
+            level7();
+          }
+        }
+      }
+      // TOKEN 3
+        levelUp3 = () => {
+          if (Game.player.x <= Game.token3.x + 35 && Game.player.y <= Game.token3.y + 7.5 && Game.player.y + 30 >= Game.token3.y && Game.player.x >= Game.token3.x){
+            coinGet.play();
+            Game.score++
+            Game.keysPressed = [];
+            Game.tokensCollected++;
+            Game.token3.x = 10000;
+            Game.token3.y = 10000;
+            if (Game.tokensCollected === 3) {
+              Game.tokensCollected = 0;
+              level7();
+            }
+          }
+          if (Game.player.x + 30 >= Game.token3.x && Game.player.y <= Game.token3.y + 7.5 && Game.player.y + 30 >= Game.token3.y && Game.player.x <= Game.token3.x + 35){
+            coinGet.play();
+            Game.score++
+            Game.keysPressed = [];
+            Game.tokensCollected++;
+            Game.token3.x = 10000;
+            Game.token3.y = 10000;
+            if (Game.tokensCollected === 3) {
+              Game.tokensCollected = 0;
+              level7();
+            }
+          }
+        }
+
+    setInterval(() => {
+      levelUp1()
+    }, 1);
+    setInterval(() => {
+      levelUp2()
+    }, 1);
+    setInterval(() => {
+      levelUp3()
+    }, 1);
+  }
+
+  level7 = () => {
+
+    Game.canvas.setAttribute('id', 'canvasGame2')
+    Game.token1 = new Component(35, 7.5, "gold", coinArray[0][Game.random(coinArray[0])], coinArray[1][Game.random(coinArray[1])]);
+    Game.token2 = new Component(35, 7.5, "gold", coinArray[0][Game.random(coinArray[0])], coinArray[1][Game.random(coinArray[1])]);
+    Game.token3 = new Component(35, 7.5, "gold", coinArray[0][Game.random(coinArray[0])], coinArray[1][Game.random(coinArray[1])]);
+    Game.levelName.innerHTML = 'Level 5';
+    Game.player.x = 30;
+    Game.player.y = 30;
+    Game.seconds = 20;
+    Game.timer.innerHTML = `Time Left: ${Game.seconds}`;
+
+    Game.verticalEnemyMovement(enemyArray[0][Game.random(enemyArray[0])], enemyArray[1][Game.random(enemyArray[1])], enemyArray[2][Game.random(enemyArray[2])], enemyArray[3][Game.random(enemyArray[3])]);
+
+
+    // TOKEN 1
+    levelUp1 = () => {
+      if (Game.player.x <= Game.token1.x + 35 && Game.player.y <= Game.token1.y + 7.5 && Game.player.y + 30 >= Game.token1.y && Game.player.x >= Game.token1.x){
+        coinGet.play();
+        Game.score++
+        Game.keysPressed = [];
+        Game.tokensCollected++;
+        Game.token1.x = 10000;
+        Game.token1.y = 10000;
+        if (Game.tokensCollected === 3) {
+          Game.tokensCollected = 0;
+          level8();
+        }
+      }
+      if (Game.player.x + 30 >= Game.token1.x && Game.player.y <= Game.token1.y + 7.5 && Game.player.y + 30 >= Game.token1.y && Game.player.x <= Game.token1.x + 35){
+        coinGet.play();
+        Game.score++
+        Game.keysPressed = [];
+        Game.tokensCollected++;
+        Game.token1.x = 10000;
+        Game.token1.y = 10000;
+        if (Game.tokensCollected === 3) {
+          Game.tokensCollected = 0;
+          level8();
+        }
+      }
+    }
+    // TOKEN 2
+      levelUp2 = () => {
+        if (Game.player.x <= Game.token2.x + 35 && Game.player.y <= Game.token2.y + 7.5 && Game.player.y + 30 >= Game.token2.y && Game.player.x >= Game.token2.x){
+          coinGet.play();
+          Game.score++
+          Game.keysPressed = [];
+          Game.tokensCollected++;
+          Game.token2.x = 10000;
+          Game.token2.y = 10000;
+          if (Game.tokensCollected === 3) {
+            Game.tokensCollected = 0;
+            level8();
+          }
+        }
+        if (Game.player.x + 30 >= Game.token2.x && Game.player.y <= Game.token2.y + 7.5 && Game.player.y + 30 >= Game.token2.y && Game.player.x <= Game.token2.x + 35){
+          coinGet.play();
+          Game.score++
+          Game.keysPressed = [];
+          Game.tokensCollected++;
+          Game.token2.x = 10000;
+          Game.token2.y = 10000;
+          if (Game.tokensCollected === 3) {
+            Game.tokensCollected = 0;
+            level8();
+          }
+        }
+      }
+      // TOKEN 3
+        levelUp3 = () => {
+          if (Game.player.x <= Game.token3.x + 35 && Game.player.y <= Game.token3.y + 7.5 && Game.player.y + 30 >= Game.token3.y && Game.player.x >= Game.token3.x){
+            coinGet.play();
+            Game.score++
+            Game.keysPressed = [];
+            Game.tokensCollected++;
+            Game.token3.x = 10000;
+            Game.token3.y = 10000;
+            if (Game.tokensCollected === 3) {
+              Game.tokensCollected = 0;
+              level8();
+            }
+          }
+          if (Game.player.x + 30 >= Game.token3.x && Game.player.y <= Game.token3.y + 7.5 && Game.player.y + 30 >= Game.token3.y && Game.player.x <= Game.token3.x + 35){
+            coinGet.play();
+            Game.score++
+            Game.keysPressed = [];
+            Game.tokensCollected++;
+            Game.token3.x = 10000;
+            Game.token3.y = 10000;
+            if (Game.tokensCollected === 3) {
+              Game.tokensCollected = 0;
+              level8();
+            }
+          }
+        }
+
+    setInterval(() => {
+      levelUp1()
+    }, 1);
+    setInterval(() => {
+      levelUp2()
+    }, 1);
+    setInterval(() => {
+      levelUp3()
+    }, 1);
+  }
+
+  level8 = () => {
+
+    Game.canvas.setAttribute('id', 'canvasGame2')
+    Game.token1 = new Component(35, 7.5, "gold", coinArray[0][Game.random(coinArray[0])], coinArray[1][Game.random(coinArray[1])]);
+    Game.token2 = new Component(35, 7.5, "gold", coinArray[0][Game.random(coinArray[0])], coinArray[1][Game.random(coinArray[1])]);
+    Game.token3 = new Component(35, 7.5, "gold", coinArray[0][Game.random(coinArray[0])], coinArray[1][Game.random(coinArray[1])]);
+    Game.levelName.innerHTML = 'Level 5';
+    Game.player.x = 30;
+    Game.player.y = 30;
+    Game.seconds = 20;
+    Game.timer.innerHTML = `Time Left: ${Game.seconds}`;
+
+    Game.horizontalEnemyMovement(enemyArray[0][Game.random(enemyArray[0])], enemyArray[1][Game.random(enemyArray[1])], enemyArray[2][Game.random(enemyArray[2])], enemyArray[3][Game.random(enemyArray[3])]);
+
+    // TOKEN 1
+    levelUp1 = () => {
+      if (Game.player.x <= Game.token1.x + 35 && Game.player.y <= Game.token1.y + 7.5 && Game.player.y + 30 >= Game.token1.y && Game.player.x >= Game.token1.x){
+        coinGet.play();
+        Game.score++
+        Game.keysPressed = [];
+        Game.tokensCollected++;
+        Game.token1.x = 10000;
+        Game.token1.y = 10000;
+        if (Game.tokensCollected === 3) {
+          Game.tokensCollected = 0;
+          level9();
+        }
+      }
+      if (Game.player.x + 30 >= Game.token1.x && Game.player.y <= Game.token1.y + 7.5 && Game.player.y + 30 >= Game.token1.y && Game.player.x <= Game.token1.x + 35){
+        coinGet.play();
+        Game.score++
+        Game.keysPressed = [];
+        Game.tokensCollected++;
+        Game.token1.x = 10000;
+        Game.token1.y = 10000;
+        if (Game.tokensCollected === 3) {
+          Game.tokensCollected = 0;
+          level9();
+        }
+      }
+    }
+    // TOKEN 2
+      levelUp2 = () => {
+        if (Game.player.x <= Game.token2.x + 35 && Game.player.y <= Game.token2.y + 7.5 && Game.player.y + 30 >= Game.token2.y && Game.player.x >= Game.token2.x){
+          coinGet.play();
+          Game.score++
+          Game.keysPressed = [];
+          Game.tokensCollected++;
+          Game.token2.x = 10000;
+          Game.token2.y = 10000;
+          if (Game.tokensCollected === 3) {
+            Game.tokensCollected = 0;
+            level9();
+          }
+        }
+        if (Game.player.x + 30 >= Game.token2.x && Game.player.y <= Game.token2.y + 7.5 && Game.player.y + 30 >= Game.token2.y && Game.player.x <= Game.token2.x + 35){
+          coinGet.play();
+          Game.score++
+          Game.keysPressed = [];
+          Game.tokensCollected++;
+          Game.token2.x = 10000;
+          Game.token2.y = 10000;
+          if (Game.tokensCollected === 3) {
+            Game.tokensCollected = 0;
+            level9();
+          }
+        }
+      }
+      // TOKEN 3
+        levelUp3 = () => {
+          if (Game.player.x <= Game.token3.x + 35 && Game.player.y <= Game.token3.y + 7.5 && Game.player.y + 30 >= Game.token3.y && Game.player.x >= Game.token3.x){
+            coinGet.play();
+            Game.score++
+            Game.keysPressed = [];
+            Game.tokensCollected++;
+            Game.token3.x = 10000;
+            Game.token3.y = 10000;
+            if (Game.tokensCollected === 3) {
+              Game.tokensCollected = 0;
+              level9();
+            }
+          }
+          if (Game.player.x + 30 >= Game.token3.x && Game.player.y <= Game.token3.y + 7.5 && Game.player.y + 30 >= Game.token3.y && Game.player.x <= Game.token3.x + 35){
+            coinGet.play();
+            Game.score++
+            Game.keysPressed = [];
+            Game.tokensCollected++;
+            Game.token3.x = 10000;
+            Game.token3.y = 10000;
+            if (Game.tokensCollected === 3) {
+              Game.tokensCollected = 0;
+              level9();
+            }
+          }
+        }
+
+    setInterval(() => {
+      levelUp1()
+    }, 1);
+    setInterval(() => {
+      levelUp2()
+    }, 1);
+    setInterval(() => {
+      levelUp3()
+    }, 1);
+  }
+
+  level9 = () => {
+
+    Game.canvas.setAttribute('id', 'canvasGame2')
+    Game.token1 = new Component(35, 7.5, "gold", coinArray[0][Game.random(coinArray[0])], coinArray[1][Game.random(coinArray[1])]);
+    Game.token2 = new Component(35, 7.5, "gold", coinArray[0][Game.random(coinArray[0])], coinArray[1][Game.random(coinArray[1])]);
+    Game.token3 = new Component(35, 7.5, "gold", coinArray[0][Game.random(coinArray[0])], coinArray[1][Game.random(coinArray[1])]);
+    Game.levelName.innerHTML = 'Level 5';
+    Game.player.x = 30;
+    Game.player.y = 30;
+    Game.seconds = 20;
+    Game.timer.innerHTML = `Time Left: ${Game.seconds}`;
+
+    Game.verticalEnemyMovement(enemyArray[0][Game.random(enemyArray[0])], enemyArray[1][Game.random(enemyArray[1])], enemyArray[2][Game.random(enemyArray[2])], enemyArray[3][Game.random(enemyArray[3])]);
+
+
+    // TOKEN 1
+    levelUp1 = () => {
+      if (Game.player.x <= Game.token1.x + 35 && Game.player.y <= Game.token1.y + 7.5 && Game.player.y + 30 >= Game.token1.y && Game.player.x >= Game.token1.x){
+        coinGet.play();
+        Game.score++
+        Game.keysPressed = [];
+        Game.tokensCollected++;
+        Game.token1.x = 10000;
+        Game.token1.y = 10000;
+        if (Game.tokensCollected === 3) {
+          Game.tokensCollected = 0;
+          level10();
+        }
+      }
+      if (Game.player.x + 30 >= Game.token1.x && Game.player.y <= Game.token1.y + 7.5 && Game.player.y + 30 >= Game.token1.y && Game.player.x <= Game.token1.x + 35){
+        coinGet.play();
+        Game.score++
+        Game.keysPressed = [];
+        Game.tokensCollected++;
+        Game.token1.x = 10000;
+        Game.token1.y = 10000;
+        if (Game.tokensCollected === 3) {
+          Game.tokensCollected = 0;
+          level10();
+        }
+      }
+    }
+    // TOKEN 2
+      levelUp2 = () => {
+        if (Game.player.x <= Game.token2.x + 35 && Game.player.y <= Game.token2.y + 7.5 && Game.player.y + 30 >= Game.token2.y && Game.player.x >= Game.token2.x){
+          coinGet.play();
+          Game.score++
+          Game.keysPressed = [];
+          Game.tokensCollected++;
+          Game.token2.x = 10000;
+          Game.token2.y = 10000;
+          if (Game.tokensCollected === 3) {
+            Game.tokensCollected = 0;
+            level10();
+          }
+        }
+        if (Game.player.x + 30 >= Game.token2.x && Game.player.y <= Game.token2.y + 7.5 && Game.player.y + 30 >= Game.token2.y && Game.player.x <= Game.token2.x + 35){
+          coinGet.play();
+          Game.score++
+          Game.keysPressed = [];
+          Game.tokensCollected++;
+          Game.token2.x = 10000;
+          Game.token2.y = 10000;
+          if (Game.tokensCollected === 3) {
+            Game.tokensCollected = 0;
+            level10();
+          }
+        }
+      }
+      // TOKEN 3
+        levelUp3 = () => {
+          if (Game.player.x <= Game.token3.x + 35 && Game.player.y <= Game.token3.y + 7.5 && Game.player.y + 30 >= Game.token3.y && Game.player.x >= Game.token3.x){
+            coinGet.play();
+            Game.score++
+            Game.keysPressed = [];
+            Game.tokensCollected++;
+            Game.token3.x = 10000;
+            Game.token3.y = 10000;
+            if (Game.tokensCollected === 3) {
+              Game.tokensCollected = 0;
+              level10();
+            }
+          }
+          if (Game.player.x + 30 >= Game.token3.x && Game.player.y <= Game.token3.y + 7.5 && Game.player.y + 30 >= Game.token3.y && Game.player.x <= Game.token3.x + 35){
+            coinGet.play();
+            Game.score++
+            Game.keysPressed = [];
+            Game.tokensCollected++;
+            Game.token3.x = 10000;
+            Game.token3.y = 10000;
+            if (Game.tokensCollected === 3) {
+              Game.tokensCollected = 0;
+              level10();
+            }
+          }
+        }
+
+    setInterval(() => {
+      levelUp1()
+    }, 1);
+    setInterval(() => {
+      levelUp2()
+    }, 1);
+    setInterval(() => {
+      levelUp3()
+    }, 1);
+  }
+
+  level10 = () => {
+
+    Game.canvas.setAttribute('id', 'canvasGame2')
+    Game.token1 = new Component(35, 7.5, "gold", coinArray[0][Game.random(coinArray[0])], coinArray[1][Game.random(coinArray[1])]);
+    Game.token2 = new Component(35, 7.5, "gold", coinArray[0][Game.random(coinArray[0])], coinArray[1][Game.random(coinArray[1])]);
+    Game.token3 = new Component(35, 7.5, "gold", coinArray[0][Game.random(coinArray[0])], coinArray[1][Game.random(coinArray[1])]);
+    Game.levelName.innerHTML = 'Level 5';
+    Game.player.x = 30;
+    Game.player.y = 30;
+    Game.seconds = 20;
+    Game.timer.innerHTML = `Time Left: ${Game.seconds}`;
+
+    Game.horizontalEnemyMovement(enemyArray[0][Game.random(enemyArray[0])], enemyArray[1][Game.random(enemyArray[1])], enemyArray[2][Game.random(enemyArray[2])], enemyArray[3][Game.random(enemyArray[3])]);
+
+    // TOKEN 1
+    levelUp1 = () => {
+      if (Game.player.x <= Game.token1.x + 35 && Game.player.y <= Game.token1.y + 7.5 && Game.player.y + 30 >= Game.token1.y && Game.player.x >= Game.token1.x){
+        coinGet.play();
+        Game.score++
+        Game.keysPressed = [];
+        Game.tokensCollected++;
+        Game.token1.x = 10000;
+        Game.token1.y = 10000;
+        if (Game.tokensCollected === 3) {
+          Game.tokensCollected = 0;
+          alert('You win!');
+          window.location.href('../html/index.html');
+        }
+      }
+      if (Game.player.x + 30 >= Game.token1.x && Game.player.y <= Game.token1.y + 7.5 && Game.player.y + 30 >= Game.token1.y && Game.player.x <= Game.token1.x + 35){
+        coinGet.play();
+        Game.score++
+        Game.keysPressed = [];
+        Game.tokensCollected++;
+        Game.token1.x = 10000;
+        Game.token1.y = 10000;
+        if (Game.tokensCollected === 3) {
+          Game.tokensCollected = 0;
+          alert('You win!');
+          window.location.href('../html/index.html');
+        }
+      }
+    }
+    // TOKEN 2
+      levelUp2 = () => {
+        if (Game.player.x <= Game.token2.x + 35 && Game.player.y <= Game.token2.y + 7.5 && Game.player.y + 30 >= Game.token2.y && Game.player.x >= Game.token2.x){
+          coinGet.play();
+          Game.score++
+          Game.keysPressed = [];
+          Game.tokensCollected++;
+          Game.token2.x = 10000;
+          Game.token2.y = 10000;
+          if (Game.tokensCollected === 3) {
+            Game.tokensCollected = 0;
+            alert('You win!');
+            window.location.href('../html/index.html');
+          }
+        }
+        if (Game.player.x + 30 >= Game.token2.x && Game.player.y <= Game.token2.y + 7.5 && Game.player.y + 30 >= Game.token2.y && Game.player.x <= Game.token2.x + 35){
+          coinGet.play();
+          Game.score++
+          Game.keysPressed = [];
+          Game.tokensCollected++;
+          Game.token2.x = 10000;
+          Game.token2.y = 10000;
+          if (Game.tokensCollected === 3) {
+            Game.tokensCollected = 0;
+            alert('You win!');
+            window.location.href('../html/index.html');
+          }
+        }
+      }
+      // TOKEN 3
+        levelUp3 = () => {
+          if (Game.player.x <= Game.token3.x + 35 && Game.player.y <= Game.token3.y + 7.5 && Game.player.y + 30 >= Game.token3.y && Game.player.x >= Game.token3.x){
+            coinGet.play();
+            Game.score++
+            Game.keysPressed = [];
+            Game.tokensCollected++;
+            Game.token3.x = 10000;
+            Game.token3.y = 10000;
+            if (Game.tokensCollected === 3) {
+              Game.tokensCollected = 0;
+              alert('You win!');
+              window.location.href('../html/index.html');
+            }
+          }
+          if (Game.player.x + 30 >= Game.token3.x && Game.player.y <= Game.token3.y + 7.5 && Game.player.y + 30 >= Game.token3.y && Game.player.x <= Game.token3.x + 35){
+            coinGet.play();
+            Game.score++
+            Game.keysPressed = [];
+            Game.tokensCollected++;
+            Game.token3.x = 10000;
+            Game.token3.y = 10000;
+            if (Game.tokensCollected === 3) {
+              Game.tokensCollected = 0;
+              alert('You win!');
+              window.location.href('../html/index.html');
+            }
+          }
+        }
+
+    setInterval(() => {
+      levelUp1()
+    }, 1);
+    setInterval(() => {
+      levelUp2()
+    }, 1);
+    setInterval(() => {
+      levelUp3()
     }, 1);
   }
 
