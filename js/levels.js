@@ -519,7 +519,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
   gameOver = () => {
     alert('Coins collected: ' + Game.score);
-    document.cookie = `username=${Game.score}; expires=Fri, 14 Feb 2020 11:00:00 GMT; path=/`;
+    function WriteCookie()
+            {
+               cookievalue= escape(Game.score) + ";";
+               document.cookie="name=" + cookievalue;
+               document.write ("Setting Cookies : " + "name=" + cookievalue );
+            }
+    // document.cookie = `username=${Game.score}; expires=Fri, 14 Feb 2020 11:00:00 GMT; path=/`;
     console.log(document.cookie);
     setTimeout(youLose = () => {
       window.location.href = '../html/gameOver.html'
