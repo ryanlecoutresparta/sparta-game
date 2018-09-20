@@ -41,18 +41,14 @@ document.addEventListener('DOMContentLoaded', () => {
   Game.enemyVertical = true;
 
   let enemyArray = [
-    [150, 200, 250, 300, 350, 400, 450, 500, 550, 600, 650, 700, 750, 800, 850], // 15
-    // y variables:
-    [125, 150, 175, 200, 225, 250, 275, 300, 325, 350], // 10
-    // size variables:
-    [40, 45, 50, 55, 60, 65, 70, 75, 80, 90, 100, 125], // 12
+    [150, 200, 250, 300, 350, 400, 450, 500, 550, 600, 650, 700, 750, 800, 850],
+    [125, 150, 175, 200, 225, 250, 275, 300, 325, 350],
+    [40, 45, 50, 55, 60, 65, 70, 75, 80, 90, 100, 125]
   ]
 
   let coinArray = [
-    // x variables:
-    [600, 625, 650, 675, 700, 725, 750, 775, 800, 825, 850, 875, 900, 925], // 14
-    // y variables:
-    [250, 275, 300, 325, 350, 360, 370, 380, 390, 400, 410, 420, 430, 440, 450, 460, 470, 480] // 18
+    [600, 625, 650, 675, 700, 725, 750, 775, 800, 825, 850, 875, 900, 925],
+    [250, 275, 300, 325, 350, 360, 370, 380, 390, 400, 410, 420, 430, 440, 450, 460, 470, 480]
   ]
 
   tokenHit = () => {
@@ -509,7 +505,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       }
     }
-
     setInterval(() => {
       levelUp()
     }, 1);
@@ -518,15 +513,32 @@ document.addEventListener('DOMContentLoaded', () => {
   newLevel(1, 1);
 
   gameOver = () => {
-    alert('Coins collected: ' + Game.score);
-    function WriteCookie()
-            {
-               cookievalue= escape(Game.score) + ";";
-               document.cookie="name=" + cookievalue;
-               document.write ("Setting Cookies : " + "name=" + cookievalue );
-            }
-    // document.cookie = `username=${Game.score}; expires=Fri, 14 Feb 2020 11:00:00 GMT; path=/`;
-    console.log(document.cookie);
+    localStorage.setItem('currentScore', Game.score);
+    if (Game.score > localStorage.getItem('Score1')) {
+      localStorage.setItem('Score5', localStorage.getItem('Score4', Game.score));
+      localStorage.setItem('Score4', localStorage.getItem('Score3', Game.score));
+      localStorage.setItem('Score3', localStorage.getItem('Score2', Game.score));
+      localStorage.setItem('Score2', localStorage.getItem('Score1', Game.score));
+      localStorage.setItem('Score1', Game.score);
+    }
+    else if (Game.score > localStorage.getItem('Score2')) {
+      localStorage.setItem('Score5', localStorage.getItem('Score4', Game.score));
+      localStorage.setItem('Score4', localStorage.getItem('Score3', Game.score));
+      localStorage.setItem('Score3', localStorage.getItem('Score2', Game.score));
+      localStorage.setItem('Score2', Game.score);
+    }
+    else if (Game.score > localStorage.getItem('Score3')) {
+      localStorage.setItem('Score5', localStorage.getItem('Score4', Game.score));
+      localStorage.setItem('Score4', localStorage.getItem('Score3', Game.score));
+      localStorage.setItem('Score3', Game.score);
+    }
+    else if (Game.score > localStorage.getItem('Score4')) {
+      localStorage.setItem('Score5', localStorage.getItem('Score4', Game.score));
+      localStorage.setItem('Score4', Game.score);
+    }
+    else if (Game.score > localStorage.getItem('Score5')) {
+      localStorage.setItem('Score5', Game.score);
+    }
     setTimeout(youLose = () => {
       window.location.href = '../html/gameOver.html'
     }, 1000);
