@@ -1,4 +1,4 @@
-##My Sparta Game: Cubes
+##My Sparta Game: Squares
 
 ##### Description: I have created a game where the user controls a square that they must move (using the arrow keys) to collect coins to progress through levels whilst avoiding the red squares. The user has 3 lives and 20 seconds per level - if either of these run out, it's game over.
 **Creator: Ryan Lecoutre**

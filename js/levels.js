@@ -13,7 +13,6 @@ document.addEventListener('DOMContentLoaded', () => {
     Game.player.newPos();
     Game.player.update();
     Game.token1.update();
-    // window.requestAnimationFrame(Game.updateGame);
     if (Game.token2Enabled === true) {
       Game.token2.update();
     }
@@ -21,7 +20,6 @@ document.addEventListener('DOMContentLoaded', () => {
       Game.token3.update();
     }
   };
-  // window.requestAnimationFrame(Game.updateGame);
 
   clear = () => {
     Game.c.clearRect(0, 0, Game.canvas.width, Game.canvas.height);
@@ -29,9 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   Game.canvas = document.getElementById('canvasGame1');
   Game.c = Game.canvas.getContext('2d');
-
   Game.update = setInterval(Game.updateGame, 10);
-
   Game.keysPressed = [];
   Game.player = new Component(30, 30, "cyan", 30, 30);
   Game.levelName = document.getElementsByClassName('levelName')[0];
@@ -54,18 +50,17 @@ document.addEventListener('DOMContentLoaded', () => {
     // size variables:
     [40, 45, 50, 55, 60, 65, 70, 75, 80, 90, 100, 125], // 12
     // speed variables:
-    [1, 2, 3, 4, 5, 6] // 6
+    [1, 2, 3, 4] // 4
   ]
 
   let coinArray = [
     // x variables:
-    [625, 655, 680, 690, 720, 733, 750, 775, 800, 825, 850, 875, 900, 925], // 14
+    [600, 625, 650, 675, 700, 725, 750, 775, 800, 825, 850, 875, 900, 925], // 14
     // y variables:
-    [300, 310, 320, 330, 340, 360, 370, 380, 390, 400, 410, 420, 430, 440] // 14
+    [250, 275, 300, 325, 350, 360, 370, 380, 390, 400, 410, 420, 430, 440, 450, 460, 470, 480] // 18
   ]
 
   tokenHit = () => {
-    coinGet.play();
     Game.score++
     Game.tokensCollected++;
   }
@@ -78,18 +73,21 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   removeToken1 = () => {
-    Game.token1.x = 10000;
-    Game.token1.y = 10000;
+    coinGet1.play();
+    Game.token1.x = 20000;
+    Game.token1.y = 20000;
   }
 
   removeToken2 = () => {
-    Game.token2.x = 10000;
-    Game.token2.y = 10000;
+    coinGet2.play();
+    Game.token2.x = 20000;
+    Game.token2.y = 20000;
   }
 
   removeToken3 = () => {
-    Game.token3.x = 10000;
-    Game.token3.y = 10000;
+    coinGet3.play();
+    Game.token3.x = 20000;
+    Game.token3.y = 20000;
   }
 
   nextLevel = () => {
@@ -131,11 +129,13 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   let lostLife = squaresSounds('../sound/172334__knova__grenade-knova.wav');
-  let coinGet = squaresSounds('../sound/242857__plasterbrain__coin-get.ogg');
+  let coinGet1 = squaresSounds('../sound/242857__plasterbrain__coin-get.ogg');
+  let coinGet2 = squaresSounds('../sound/242857__plasterbrain__coin-get.ogg');
+  let coinGet3 = squaresSounds('../sound/242857__plasterbrain__coin-get.ogg');
 
   Game.random = (array) => {
     let arr = (array.length) - 1;
-    let rand = Math.floor(Math.random()*arr);
+    let rand = Math.floor(Number(Math.random()*arr));
     return rand;
   }
 
@@ -166,99 +166,7 @@ document.addEventListener('DOMContentLoaded', () => {
     Game.keysPressed[event.keyCode] = false;
   });
 
-  Game.verticalEnemyMovement = (x, y, size, dy) => {
-    movement = () => {
-      Game.c.beginPath();
-      Game.c.fillStyle = "#ff0000";
-      Game.c.fillRect(x, y, size, size);
-      Game.c.fill();
-      Game.c.closePath();
-      if (y+dy < 0) {
-        dy = -dy;
-      } else if (y+dy > 500 - size) {
-        dy = -dy;
-      }
-      y = y + dy;
-      // window.requestAnimationFrame(movement);
-
-      if (Game.player.x <= x + size && Game.player.y <= y + size && Game.player.y + 30 >= y && Game.player.x >= x){
-        lostLife.play();
-        Game.player.x = 30;
-        Game.player.y = 30;
-        Game.livesRemaining--;
-        if (Game.livesRemaining === 0) {
-          Game.player.x = 10000;
-          Game.player.y = 10000;
-          setTimeout(youLose = () => {
-            window.location.href = '../html/gameOver.html'
-          }, 1000);
-        }
-      }
-      if (Game.player.x + 30 >= x && Game.player.y <= y + size && Game.player.y + 30 >= y && Game.player.x + 30 <= x + size){
-        lostLife.play();
-        Game.player.x = 30;
-        Game.player.y = 30;
-        Game.livesRemaining--;
-        if (Game.livesRemaining === 0) {
-          Game.player.x = 10000;
-          Game.player.y = 10000;
-          setTimeout(youLose = () => {
-            window.location.href = '../html/gameOver.html'
-          }, 1000);
-        }
-      }
-    }
-    setInterval(movement, 10);
-    // window.requestAnimationFrame(movement);
-  }
-
-  Game.horizontalEnemyMovement = (x, y, size, dx) => {
-    movement = () => {
-      Game.c.beginPath();
-      Game.c.fillStyle = "#ff0000";
-      Game.c.fillRect(x, y, size, size);
-      Game.c.fill();
-      Game.c.closePath();
-      if (x+dx < 0) {
-        dx = -dx;
-      } else if (x+dx > 1000 - size) {
-        dx = -dx;
-      }
-      x += dx;
-      // window.requestAnimationFrame(movement);
-
-      if (Game.player.y <= y + size && Game.player.x <= x + size && Game.player.x + 30 >= x && Game.player.y >= y){
-        lostLife.play();
-        Game.player.x = 30;
-        Game.player.y = 30;
-        Game.livesRemaining--;
-        if (Game.livesRemaining === 0) {
-          Game.player.x = 10000;
-          Game.player.y = 10000;
-          setTimeout(youLose = () => {
-            window.location.href = '../html/gameOver.html'
-          }, 1000);
-        }
-      }
-      if (Game.player.y + 30 >= y && Game.player.x <= x + size && Game.player.x + 30 >= x && Game.player.y + 30 <= y + size){
-        lostLife.play();
-        Game.player.x = 30;
-        Game.player.y = 30;
-        Game.livesRemaining--;
-        if (Game.livesRemaining === 0) {
-          Game.player.x = 10000;
-          Game.player.y = 10000;
-          setTimeout(youLose = () => {
-            window.location.href = '../html/gameOver.html'
-          }, 1000);
-        }
-      }
-    }
-    setInterval(movement, 10);
-    // window.requestAnimationFrame(movement)
-  }
-
-  let GameTokenArray = [];
+  let arrayOfEnemies = [];
 
   newLevel = (coinNumber, level) => {
 
@@ -268,10 +176,6 @@ document.addEventListener('DOMContentLoaded', () => {
     Game.seconds = 30;
     Game.timer.innerHTML = `Time Left: ${Game.seconds}`;
     Game.canvas.setAttribute('id', 'canvasGame1')
-
-    for (i=1; i<=coinNumber; i++) {
-      GameTokenArray.push(`Game.token${i}`);
-    }
 
     if (coinNumber === 1) {
       Game.token1 = new Component(35, 7.5, "gold", coinArray[0][Game.random(coinArray[0])], coinArray[1][Game.random(coinArray[1])]);
@@ -286,13 +190,97 @@ document.addEventListener('DOMContentLoaded', () => {
       Game.token3 = new Component(35, 7.5, "gold", coinArray[0][Game.random(coinArray[0])], coinArray[1][Game.random(coinArray[1])]);
     }
 
+    function Enemy (x, y, size, dy, dx) {
+
+      this.x = x;
+      this.y = y;
+      this.size = size;
+      this.dy = dy;
+      this.dx = dx;
+
+      this.draw = () => {
+        Game.c.beginPath();
+        Game.c.fillStyle = "#ff0000";
+        Game.c.fillRect(this.x, this.y, this.size, this.size);
+        Game.c.fill();
+        Game.c.closePath();
+      };
+
+        this.movement = () => {
+          if (this.y+this.dy < 0) {
+            this.dy = -this.dy;
+          } else if (this.y+this.dy > 500 - this.size) {
+            this.dy = -this.dy;
+          }
+          this.y = this.y + this.dy;
+
+          if (this.x+this.dx < 0) {
+            this.dx = -this.dx;
+          } else if (this.x+this.dx > 1000 - this.size) {
+            this.dx = -this.dx;
+          }
+          this.x = this.x + this.dx;
+
+          if (Game.player.x <= this.x + this.size && Game.player.y <= this.y + this.size && Game.player.y + 30 >= this.y && Game.player.x >= this.x){
+            lostLife.play();
+            Game.player.x = 30;
+            Game.player.y = 30;
+            Game.livesRemaining--;
+            if (Game.livesRemaining === 0) {
+              Game.player.x = 10000;
+              Game.player.y = 10000;
+              setTimeout(youLose = () => {
+                window.location.href = '../html/gameOver.html'
+              }, 1000);
+            }
+          }
+          if (Game.player.x + 30 >= this.x && Game.player.y <= this.y + this.size && Game.player.y + 30 >= this.y && Game.player.x + 30 <= this.x + this.size){
+            lostLife.play();
+            Game.player.x = 30;
+            Game.player.y = 30;
+            Game.livesRemaining--;
+            if (Game.livesRemaining === 0) {
+              Game.player.x = 10000;
+              Game.player.y = 10000;
+              setTimeout(youLose = () => {
+                window.location.href = '../html/gameOver.html'
+              }, 1000);
+            }
+          }
+          this.draw();
+        }
+      }
+
     if (Game.enemyVertical === true) {
-      Game.verticalEnemyMovement(enemyArray[0][Game.random(enemyArray[0])], enemyArray[1][Game.random(enemyArray[1])], enemyArray[2][Game.random(enemyArray[2])], enemyArray[3][Game.random(enemyArray[3])]);
+      let x = enemyArray[0][Game.random(enemyArray[0])];
+      let y = enemyArray[1][Game.random(enemyArray[1])];
+      let size = enemyArray[2][Game.random(enemyArray[2])];
+      let dy = enemyArray[3][Game.random(enemyArray[3])];
+      let dx = 0;
+      arrayOfEnemies.push(new Enemy(x, y, size, dy, dx));
       Game.enemyVertical = false;
     } else {
-      Game.horizontalEnemyMovement(enemyArray[0][Game.random(enemyArray[0])], enemyArray[1][Game.random(enemyArray[1])], enemyArray[2][Game.random(enemyArray[2])], enemyArray[3][Game.random(enemyArray[3])]);
+      let x = enemyArray[0][Game.random(enemyArray[0])];
+      let y = enemyArray[1][Game.random(enemyArray[1])];
+      let size = enemyArray[2][Game.random(enemyArray[2])];
+      let dy = 0;
+      let dx = enemyArray[3][Game.random(enemyArray[3])];
+      arrayOfEnemies.push(new Enemy(x, y, size, dy, dx));
       Game.enemyVertical = true;
     }
+
+    objectDrawer = (array) => {
+      for (let i = 0; i < arrayOfEnemies.length; i++) {
+        arrayOfEnemies[i].movement();
+      }
+    }
+
+    animate = () => {
+      requestAnimationFrame(animate);
+      objectDrawer(arrayOfEnemies);
+    }
+
+    animate();
 
     levelUp = () => {
 
