@@ -1,14 +1,20 @@
 document.addEventListener('DOMContentLoaded', () => {
 
+const Score = new Object();
 
+Score.current = localStorage.getItem('currentScore');
 
-function readCookie() {
-  let allcookies = document.cookie;
-  document.write (allcookies);
+if (Score.current == 1) {
+  Score.text = document.getElementsByClassName('coinOrCoins')[0];
+  Score.text.innerHTML = 'coin!';
+  Score.currentScore = document.getElementsByClassName('scoreIGot')[0];
+  Score.currentScore.innerHTML = `${Score.current}`;
+}
+else {
+  Score.currentScore = document.getElementsByClassName('scoreIGot')[0];
+  Score.currentScore.innerHTML = `${Score.current}`;
 }
 
-// let scoreGot = document.cookie;
-// console.log(scoreGot)
-// scoreGot.setAttribute('class', 'currentScore');
+localStorage.removeItem('currentScore');
 
 })
