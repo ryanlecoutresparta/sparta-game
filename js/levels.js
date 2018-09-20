@@ -1,6 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
 
-
   const Game = new Object();
   Game.updateGame = () => {
     clear();
@@ -25,11 +24,9 @@ document.addEventListener('DOMContentLoaded', () => {
     Game.c.clearRect(0, 0, Game.canvas.width, Game.canvas.height);
   };
 
-  Game.canvas = document.getElementById('canvasGame1');
-  Game.c = Game.canvas.getContext('2d');
   Game.update = setInterval(Game.updateGame, 10);
   Game.keysPressed = [];
-  Game.player = new Component(30, 30, "cyan", 30, 30);
+  Game.player = new Component(30, 30, "cyan", 10, 10);
   Game.levelName = document.getElementsByClassName('levelName')[0];
   Game.timer = document.getElementsByClassName('timer')[0];
   Game.seconds = 30;
@@ -49,8 +46,6 @@ document.addEventListener('DOMContentLoaded', () => {
     [125, 150, 175, 200, 225, 250, 275, 300, 325, 350], // 10
     // size variables:
     [40, 45, 50, 55, 60, 65, 70, 75, 80, 90, 100, 125], // 12
-    // speed variables:
-    [1, 2, 3, 4] // 4
   ]
 
   let coinArray = [
@@ -66,8 +61,8 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   levelReset = () => {
-    Game.player.x = 30;
-    Game.player.y = 30;
+    Game.player.x = 10;
+    Game.player.y = 10;
     Game.seconds = 30;
     Game.timer.innerHTML = `Time Left: ${Game.seconds}`;
   }
@@ -128,7 +123,9 @@ document.addEventListener('DOMContentLoaded', () => {
     return audio;
   }
 
-  let lostLife = squaresSounds('../sound/172334__knova__grenade-knova.wav');
+  let lostLife1 = squaresSounds('../sound/172334__knova__grenade-knova.wav');
+  let lostLife2 = squaresSounds('../sound/172334__knova__grenade-knova.wav');
+  let lostLife3 = squaresSounds('../sound/172334__knova__grenade-knova.wav');
   let coinGet1 = squaresSounds('../sound/242857__plasterbrain__coin-get.ogg');
   let coinGet2 = squaresSounds('../sound/242857__plasterbrain__coin-get.ogg');
   let coinGet3 = squaresSounds('../sound/242857__plasterbrain__coin-get.ogg');
@@ -170,12 +167,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
   newLevel = (coinNumber, level) => {
 
+    Game.canvas = document.getElementById('canvasGame1');
+    Game.c = Game.canvas.getContext('2d');
+
     Game.levelName.innerHTML = `Level ${level}`;
-    Game.player.x = 30;
-    Game.player.y = 30;
-    Game.seconds = 30;
-    Game.timer.innerHTML = `Time Left: ${Game.seconds}`;
-    Game.canvas.setAttribute('id', 'canvasGame1')
+    levelReset();
 
     if (coinNumber === 1) {
       Game.token1 = new Component(35, 7.5, "gold", coinArray[0][Game.random(coinArray[0])], coinArray[1][Game.random(coinArray[1])]);
@@ -206,70 +202,91 @@ document.addEventListener('DOMContentLoaded', () => {
         Game.c.closePath();
       };
 
-        this.movement = () => {
-          if (this.y+this.dy < 0) {
-            this.dy = -this.dy;
-          } else if (this.y+this.dy > 500 - this.size) {
-            this.dy = -this.dy;
-          }
-          this.y = this.y + this.dy;
-
-          if (this.x+this.dx < 0) {
-            this.dx = -this.dx;
-          } else if (this.x+this.dx > 1000 - this.size) {
-            this.dx = -this.dx;
-          }
-          this.x = this.x + this.dx;
-
-          if (Game.player.x <= this.x + this.size && Game.player.y <= this.y + this.size && Game.player.y + 30 >= this.y && Game.player.x >= this.x){
-            lostLife.play();
-            Game.player.x = 30;
-            Game.player.y = 30;
-            Game.livesRemaining--;
-            if (Game.livesRemaining === 0) {
-              Game.player.x = 10000;
-              Game.player.y = 10000;
-              setTimeout(youLose = () => {
-                window.location.href = '../html/gameOver.html'
-              }, 1000);
-            }
-          }
-          if (Game.player.x + 30 >= this.x && Game.player.y <= this.y + this.size && Game.player.y + 30 >= this.y && Game.player.x + 30 <= this.x + this.size){
-            lostLife.play();
-            Game.player.x = 30;
-            Game.player.y = 30;
-            Game.livesRemaining--;
-            if (Game.livesRemaining === 0) {
-              Game.player.x = 10000;
-              Game.player.y = 10000;
-              setTimeout(youLose = () => {
-                window.location.href = '../html/gameOver.html'
-              }, 1000);
-            }
-          }
-          this.draw();
+      this.movement = () => {
+        if (this.y+this.dy < 0) {
+          this.dy = -this.dy;
+        } else if (this.y+this.dy > 500 - this.size) {
+          this.dy = -this.dy;
         }
-      }
+        this.y = this.y + this.dy;
 
-    if (Game.enemyVertical === true) {
-      let x = enemyArray[0][Game.random(enemyArray[0])];
-      let y = enemyArray[1][Game.random(enemyArray[1])];
-      let size = enemyArray[2][Game.random(enemyArray[2])];
-      let dy = enemyArray[3][Game.random(enemyArray[3])];
-      let dx = 0;
-      arrayOfEnemies.push(new Enemy(x, y, size, dy, dx));
-      Game.enemyVertical = false;
-    } else {
-      let x = enemyArray[0][Game.random(enemyArray[0])];
-      let y = enemyArray[1][Game.random(enemyArray[1])];
-      let size = enemyArray[2][Game.random(enemyArray[2])];
-      let dy = 0;
-      let dx = enemyArray[3][Game.random(enemyArray[3])];
-      arrayOfEnemies.push(new Enemy(x, y, size, dy, dx));
-      Game.enemyVertical = true;
+        if (this.x+this.dx < 0) {
+          this.dx = -this.dx;
+        } else if (this.x+this.dx > 1000 - this.size) {
+          this.dx = -this.dx;
+        }
+        this.x = this.x + this.dx;
+
+        if (Game.player.x <= this.x + this.size && Game.player.y <= this.y + this.size && Game.player.y + 30 >= this.y && Game.player.x >= this.x){
+          if (Game.livesRemaining === 3) {
+            lostLife1.play();
+          } else if (Game.livesRemaining === 2) {
+            lostLife2.play();
+          } else if (Game.livesRemaining === 1) {
+            lostLife3.play();
+          }
+          Game.player.x = 10;
+          Game.player.y = 10;
+          Game.livesRemaining--;
+          if (Game.livesRemaining === 0) {
+            Game.player.x = 10000;
+            Game.player.y = 10000;
+            setTimeout(youLose = () => {
+              gameOver();
+            }, 1000);
+          }
+        }
+        if (Game.player.x + 30 >= this.x && Game.player.y <= this.y + this.size && Game.player.y + 30 >= this.y && Game.player.x + 30 <= this.x + this.size){
+          if (Game.livesRemaining === 3) {
+            lostLife1.play();
+          } else if (Game.livesRemaining === 2) {
+            lostLife2.play();
+          } else if (Game.livesRemaining === 1) {
+            lostLife3.play();
+          }
+          Game.player.x = 10;
+          Game.player.y = 10;
+          Game.livesRemaining--;
+          if (Game.livesRemaining === 0) {
+            Game.player.x = 10000;
+            Game.player.y = 10000;
+            setTimeout(youLose = () => {
+              gameOver();
+            }, 1000);
+          }
+        }
+        this.draw();
+      }
     }
 
-    objectDrawer = (array) => {
+    if (level < 6) {
+      if (Game.enemyVertical === true) {
+        let x = enemyArray[0][Game.random(enemyArray[0])];
+        let y = enemyArray[1][Game.random(enemyArray[1])];
+        let size = enemyArray[2][Game.random(enemyArray[2])];
+        let dy = 1;
+        let dx = 0;
+        arrayOfEnemies.push(new Enemy(x, y, size, dy, dx));
+        Game.enemyVertical = false;
+      } else {
+        let x = enemyArray[0][Game.random(enemyArray[0])];
+        let y = enemyArray[1][Game.random(enemyArray[1])];
+        let size = enemyArray[2][Game.random(enemyArray[2])];
+        let dy = 0;
+        let dx = 1;
+        arrayOfEnemies.push(new Enemy(x, y, size, dy, dx));
+        Game.enemyVertical = true;
+      }
+    } else if (level % 2 === 0) {
+      let x = enemyArray[0][Game.random(enemyArray[0])];
+      let y = enemyArray[1][Game.random(enemyArray[1])];
+      let size = enemyArray[2][Game.random(enemyArray[2])];
+      let dy = 0.5;
+      let dx = 0.5;
+      arrayOfEnemies.push(new Enemy(x, y, size, dy, dx));
+    }
+
+    addToEnemyArray = (array) => {
       for (let i = 0; i < arrayOfEnemies.length; i++) {
         arrayOfEnemies[i].movement();
       }
@@ -277,221 +294,221 @@ document.addEventListener('DOMContentLoaded', () => {
 
     animate = () => {
       requestAnimationFrame(animate);
-      objectDrawer(arrayOfEnemies);
+      addToEnemyArray(arrayOfEnemies);
     }
 
     animate();
 
     levelUp = () => {
 
-        if (coinNumber === 1) {
+      if (coinNumber === 1) {
 
-          Game.token2Enabled = false;
-          Game.token3Enabled = false;
+        Game.token2Enabled = false;
+        Game.token3Enabled = false;
 
-          if (Game.player.x <= Game.token1.x + 35 && Game.player.y <= Game.token1.y + 7.5 && Game.player.y + 30 >= Game.token1.y && Game.player.x >= Game.token1.x){
-            tokenHit();
-            removeToken1();
-            if (Game.tokensCollected === 1) {
-              nextLevel();
-              level++;
-              if (coinNumber < 3) {
-                coinNumber++;
-                newLevel(coinNumber, level);
-              } else if (coinNumber === 3) {
-                coinNumber = 3;
-                newLevel(coinNumber, level);
-              }
-            }
-          }
-
-          if (Game.player.x + 30 >= Game.token1.x && Game.player.y <= Game.token1.y + 7.5 && Game.player.y + 30 >= Game.token1.y && Game.player.x <= Game.token1.x + 35){
-            tokenHit();
-            removeToken1();
-            if (Game.tokensCollected === 1) {
-              nextLevel();
-              level++;
-              if (coinNumber < 3) {
-                coinNumber++;
-                newLevel(coinNumber, level);
-              } else if (coinNumber === 3) {
-                coinNumber = 3;
-                newLevel(coinNumber, level);
-              }
+        if (Game.player.x <= Game.token1.x + 35 && Game.player.y <= Game.token1.y + 7.5 && Game.player.y + 30 >= Game.token1.y && Game.player.x >= Game.token1.x){
+          tokenHit();
+          removeToken1();
+          if (Game.tokensCollected === 1) {
+            nextLevel();
+            level++;
+            if (coinNumber < 3) {
+              coinNumber++;
+              newLevel(coinNumber, level);
+            } else if (coinNumber === 3) {
+              coinNumber = 3;
+              newLevel(coinNumber, level);
             }
           }
         }
 
-        else if (coinNumber === 2) {
-
-          Game.token2Enabled = true;
-
-          if (Game.player.x <= Game.token1.x + 35 && Game.player.y <= Game.token1.y + 7.5 && Game.player.y + 30 >= Game.token1.y && Game.player.x >= Game.token1.x){
-            tokenHit();
-            removeToken1();
-            if (Game.tokensCollected === 2) {
-              nextLevel();
-              level++;
-              if (coinNumber < 3) {
-                coinNumber++;
-                newLevel(coinNumber, level);
-              } else if (coinNumber === 3) {
-                coinNumber = 3;
-                newLevel(coinNumber, level);
-              }
-            }
-          }
-
-          if (Game.player.x + 30 >= Game.token1.x && Game.player.y <= Game.token1.y + 7.5 && Game.player.y + 30 >= Game.token1.y && Game.player.x <= Game.token1.x + 35){
-            tokenHit();
-            removeToken1();
-            if (Game.tokensCollected === 2) {
-              nextLevel();
-              level++;
-              if (coinNumber < 3) {
-                coinNumber++;
-                newLevel(coinNumber, level);
-              } else if (coinNumber === 3) {
-                coinNumber = 3;
-                newLevel(coinNumber, level);
-              }
-            }
-          }
-
-          if (Game.player.x <= Game.token2.x + 35 && Game.player.y <= Game.token2.y + 7.5 && Game.player.y + 30 >= Game.token2.y && Game.player.x >= Game.token2.x){
-            tokenHit();
-            removeToken2();
-            if (Game.tokensCollected === 2) {
-              nextLevel();
-              level++;
-              if (coinNumber < 3) {
-                coinNumber++;
-                newLevel(coinNumber, level);
-              } else if (coinNumber === 3) {
-                coinNumber = 3;
-                newLevel(coinNumber, level);
-              }
-            }
-          }
-
-          if (Game.player.x + 30 >= Game.token2.x && Game.player.y <= Game.token2.y + 7.5 && Game.player.y + 30 >= Game.token2.y && Game.player.x <= Game.token2.x + 35){
-            tokenHit();
-            removeToken2();
-            if (Game.tokensCollected === 2) {
-              nextLevel();
-              level++;
-              if (coinNumber < 3) {
-                coinNumber++;
-                newLevel(coinNumber, level);
-              } else if (coinNumber === 3) {
-                coinNumber = 3;
-                newLevel(coinNumber, level);
-              }
-            }
-          }
-        }
-
-        else if (coinNumber === 3) {
-
-          Game.token3Enabled = true;
-
-          if (Game.player.x <= Game.token1.x + 35 && Game.player.y <= Game.token1.y + 7.5 && Game.player.y + 30 >= Game.token1.y && Game.player.x >= Game.token1.x){
-            tokenHit();
-            removeToken1();
-            if (Game.tokensCollected === 3) {
-              nextLevel();
-              level++;
-              if (coinNumber < 3) {
-                coinNumber++;
-                newLevel(coinNumber, level);
-              } else if (coinNumber === 3) {
-                coinNumber = 3;
-                newLevel(coinNumber, level);
-              }
-            }
-          }
-
-          if (Game.player.x + 30 >= Game.token1.x && Game.player.y <= Game.token1.y + 7.5 && Game.player.y + 30 >= Game.token1.y && Game.player.x <= Game.token1.x + 35){
-            tokenHit();
-            removeToken1();
-            if (Game.tokensCollected === 3) {
-              nextLevel();
-              level++;
-              if (coinNumber < 3) {
-                coinNumber++;
-                newLevel(coinNumber, level);
-              } else if (coinNumber === 3) {
-                coinNumber = 3;
-                newLevel(coinNumber, level);
-              }
-            }
-          }
-
-          if (Game.player.x <= Game.token2.x + 35 && Game.player.y <= Game.token2.y + 7.5 && Game.player.y + 30 >= Game.token2.y && Game.player.x >= Game.token2.x){
-            tokenHit();
-            removeToken2();
-            if (Game.tokensCollected === 3) {
-              nextLevel();
-              level++;
-              if (coinNumber < 3) {
-                coinNumber++;
-                newLevel(coinNumber, level);
-              } else if (coinNumber === 3) {
-                coinNumber = 3;
-                newLevel(coinNumber, level);
-              }
-            }
-          }
-
-          if (Game.player.x + 30 >= Game.token2.x && Game.player.y <= Game.token2.y + 7.5 && Game.player.y + 30 >= Game.token2.y && Game.player.x <= Game.token2.x + 35){
-            tokenHit();
-            removeToken2();
-            if (Game.tokensCollected === 3) {
-              nextLevel();
-              level++;
-              if (coinNumber < 3) {
-                coinNumber++;
-                newLevel(coinNumber, level);
-              } else if (coinNumber === 3) {
-                coinNumber = 3;
-                newLevel(coinNumber, level);
-              }
-            }
-          }
-
-          if (Game.player.x <= Game.token2.x + 35 && Game.player.y <= Game.token2.y + 7.5 && Game.player.y + 30 >= Game.token2.y && Game.player.x >= Game.token2.x){
-            tokenHit();
-            removeToken3();
-            if (Game.tokensCollected === 3) {
-              nextLevel();
-              level++;
-              if (coinNumber < 3) {
-                coinNumber++;
-                newLevel(coinNumber, level);
-              } else if (coinNumber === 3) {
-                coinNumber = 3;
-                newLevel(coinNumber, level);
-              }
-            }
-          }
-
-          if (Game.player.x + 30 >= Game.token3.x && Game.player.y <= Game.token3.y + 7.5 && Game.player.y + 30 >= Game.token3.y && Game.player.x <= Game.token3.x + 35){
-            tokenHit();
-            removeToken3();
-            if (Game.tokensCollected === 3) {
-              nextLevel();
-              level++;
-              if (coinNumber < 3) {
-                coinNumber++;
-                newLevel(coinNumber, level);
-              } else if (coinNumber === 3) {
-                coinNumber = 3;
-                newLevel(coinNumber, level);
-              }
+        if (Game.player.x + 30 >= Game.token1.x && Game.player.y <= Game.token1.y + 7.5 && Game.player.y + 30 >= Game.token1.y && Game.player.x <= Game.token1.x + 35){
+          tokenHit();
+          removeToken1();
+          if (Game.tokensCollected === 1) {
+            nextLevel();
+            level++;
+            if (coinNumber < 3) {
+              coinNumber++;
+              newLevel(coinNumber, level);
+            } else if (coinNumber === 3) {
+              coinNumber = 3;
+              newLevel(coinNumber, level);
             }
           }
         }
       }
+
+      else if (coinNumber === 2) {
+
+        Game.token2Enabled = true;
+
+        if (Game.player.x <= Game.token1.x + 35 && Game.player.y <= Game.token1.y + 7.5 && Game.player.y + 30 >= Game.token1.y && Game.player.x >= Game.token1.x){
+          tokenHit();
+          removeToken1();
+          if (Game.tokensCollected === 2) {
+            nextLevel();
+            level++;
+            if (coinNumber < 3) {
+              coinNumber++;
+              newLevel(coinNumber, level);
+            } else if (coinNumber === 3) {
+              coinNumber = 3;
+              newLevel(coinNumber, level);
+            }
+          }
+        }
+
+        if (Game.player.x + 30 >= Game.token1.x && Game.player.y <= Game.token1.y + 7.5 && Game.player.y + 30 >= Game.token1.y && Game.player.x <= Game.token1.x + 35){
+          tokenHit();
+          removeToken1();
+          if (Game.tokensCollected === 2) {
+            nextLevel();
+            level++;
+            if (coinNumber < 3) {
+              coinNumber++;
+              newLevel(coinNumber, level);
+            } else if (coinNumber === 3) {
+              coinNumber = 3;
+              newLevel(coinNumber, level);
+            }
+          }
+        }
+
+        if (Game.player.x <= Game.token2.x + 35 && Game.player.y <= Game.token2.y + 7.5 && Game.player.y + 30 >= Game.token2.y && Game.player.x >= Game.token2.x){
+          tokenHit();
+          removeToken2();
+          if (Game.tokensCollected === 2) {
+            nextLevel();
+            level++;
+            if (coinNumber < 3) {
+              coinNumber++;
+              newLevel(coinNumber, level);
+            } else if (coinNumber === 3) {
+              coinNumber = 3;
+              newLevel(coinNumber, level);
+            }
+          }
+        }
+
+        if (Game.player.x + 30 >= Game.token2.x && Game.player.y <= Game.token2.y + 7.5 && Game.player.y + 30 >= Game.token2.y && Game.player.x <= Game.token2.x + 35){
+          tokenHit();
+          removeToken2();
+          if (Game.tokensCollected === 2) {
+            nextLevel();
+            level++;
+            if (coinNumber < 3) {
+              coinNumber++;
+              newLevel(coinNumber, level);
+            } else if (coinNumber === 3) {
+              coinNumber = 3;
+              newLevel(coinNumber, level);
+            }
+          }
+        }
+      }
+
+      else if (coinNumber === 3) {
+
+        Game.token3Enabled = true;
+
+        if (Game.player.x <= Game.token1.x + 35 && Game.player.y <= Game.token1.y + 7.5 && Game.player.y + 30 >= Game.token1.y && Game.player.x >= Game.token1.x){
+          tokenHit();
+          removeToken1();
+          if (Game.tokensCollected === 3) {
+            nextLevel();
+            level++;
+            if (coinNumber < 3) {
+              coinNumber++;
+              newLevel(coinNumber, level);
+            } else if (coinNumber === 3) {
+              coinNumber = 3;
+              newLevel(coinNumber, level);
+            }
+          }
+        }
+
+        if (Game.player.x + 30 >= Game.token1.x && Game.player.y <= Game.token1.y + 7.5 && Game.player.y + 30 >= Game.token1.y && Game.player.x <= Game.token1.x + 35){
+          tokenHit();
+          removeToken1();
+          if (Game.tokensCollected === 3) {
+            nextLevel();
+            level++;
+            if (coinNumber < 3) {
+              coinNumber++;
+              newLevel(coinNumber, level);
+            } else if (coinNumber === 3) {
+              coinNumber = 3;
+              newLevel(coinNumber, level);
+            }
+          }
+        }
+
+        if (Game.player.x <= Game.token2.x + 35 && Game.player.y <= Game.token2.y + 7.5 && Game.player.y + 30 >= Game.token2.y && Game.player.x >= Game.token2.x){
+          tokenHit();
+          removeToken2();
+          if (Game.tokensCollected === 3) {
+            nextLevel();
+            level++;
+            if (coinNumber < 3) {
+              coinNumber++;
+              newLevel(coinNumber, level);
+            } else if (coinNumber === 3) {
+              coinNumber = 3;
+              newLevel(coinNumber, level);
+            }
+          }
+        }
+
+        if (Game.player.x + 30 >= Game.token2.x && Game.player.y <= Game.token2.y + 7.5 && Game.player.y + 30 >= Game.token2.y && Game.player.x <= Game.token2.x + 35){
+          tokenHit();
+          removeToken2();
+          if (Game.tokensCollected === 3) {
+            nextLevel();
+            level++;
+            if (coinNumber < 3) {
+              coinNumber++;
+              newLevel(coinNumber, level);
+            } else if (coinNumber === 3) {
+              coinNumber = 3;
+              newLevel(coinNumber, level);
+            }
+          }
+        }
+
+        if (Game.player.x <= Game.token2.x + 35 && Game.player.y <= Game.token2.y + 7.5 && Game.player.y + 30 >= Game.token2.y && Game.player.x >= Game.token2.x){
+          tokenHit();
+          removeToken3();
+          if (Game.tokensCollected === 3) {
+            nextLevel();
+            level++;
+            if (coinNumber < 3) {
+              coinNumber++;
+              newLevel(coinNumber, level);
+            } else if (coinNumber === 3) {
+              coinNumber = 3;
+              newLevel(coinNumber, level);
+            }
+          }
+        }
+
+        if (Game.player.x + 30 >= Game.token3.x && Game.player.y <= Game.token3.y + 7.5 && Game.player.y + 30 >= Game.token3.y && Game.player.x <= Game.token3.x + 35){
+          tokenHit();
+          removeToken3();
+          if (Game.tokensCollected === 3) {
+            nextLevel();
+            level++;
+            if (coinNumber < 3) {
+              coinNumber++;
+              newLevel(coinNumber, level);
+            } else if (coinNumber === 3) {
+              coinNumber = 3;
+              newLevel(coinNumber, level);
+            }
+          }
+        }
+      }
+    }
 
     setInterval(() => {
       levelUp()
@@ -499,6 +516,15 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   newLevel(1, 1);
+
+  gameOver = () => {
+    alert('Coins collected: ' + Game.score);
+    document.cookie = `username=${Game.score}; expires=Fri, 14 Feb 2020 11:00:00 GMT; path=/`;
+    console.log(document.cookie);
+    setTimeout(youLose = () => {
+      window.location.href = '../html/gameOver.html'
+    }, 1000);
+  }
 
   setInterval(() => {
     countdown()
