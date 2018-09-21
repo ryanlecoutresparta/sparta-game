@@ -539,6 +539,7 @@ document.addEventListener('DOMContentLoaded', () => {
     else if (Game.score > localStorage.getItem('Score5')) {
       localStorage.setItem('Score5', Game.score);
     }
+
     setTimeout(youLose = () => {
       window.location.href = '../html/gameOver.html'
     }, 1000);
