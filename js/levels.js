@@ -514,29 +514,29 @@ document.addEventListener('DOMContentLoaded', () => {
 
   gameOver = () => {
     localStorage.setItem('currentScore', Game.score);
-    if (Game.score > localStorage.getItem('Score1')) {
+    if (Game.score > localStorage.getItem('Score1') || localStorage.getItem('Score1') == null) {
       localStorage.setItem('Score5', localStorage.getItem('Score4', Game.score));
       localStorage.setItem('Score4', localStorage.getItem('Score3', Game.score));
       localStorage.setItem('Score3', localStorage.getItem('Score2', Game.score));
       localStorage.setItem('Score2', localStorage.getItem('Score1', Game.score));
       localStorage.setItem('Score1', Game.score);
     }
-    else if (Game.score > localStorage.getItem('Score2')) {
+    else if (Game.score > localStorage.getItem('Score2') || localStorage.getItem('Score2') == null) {
       localStorage.setItem('Score5', localStorage.getItem('Score4', Game.score));
       localStorage.setItem('Score4', localStorage.getItem('Score3', Game.score));
       localStorage.setItem('Score3', localStorage.getItem('Score2', Game.score));
       localStorage.setItem('Score2', Game.score);
     }
-    else if (Game.score > localStorage.getItem('Score3')) {
+    else if (Game.score > localStorage.getItem('Score3') || localStorage.getItem('Score3') == null) {
       localStorage.setItem('Score5', localStorage.getItem('Score4', Game.score));
       localStorage.setItem('Score4', localStorage.getItem('Score3', Game.score));
       localStorage.setItem('Score3', Game.score);
     }
-    else if (Game.score > localStorage.getItem('Score4')) {
+    else if (Game.score > localStorage.getItem('Score4') || localStorage.getItem('Score4') == null) {
       localStorage.setItem('Score5', localStorage.getItem('Score4', Game.score));
       localStorage.setItem('Score4', Game.score);
     }
-    else if (Game.score > localStorage.getItem('Score5')) {
+    else if (Game.score > localStorage.getItem('Score5') || localStorage.getItem('Score5') == null) {
       localStorage.setItem('Score5', Game.score);
     }
 
