@@ -133,16 +133,6 @@ body {
   border: white 5px solid;
 }
 
-#canvasGame2 {
-  background-color: rgb(156, 88, 9);
-  border: black 5px solid;
-}
-
-#canvasGame3 {
-  background-color: rgb(66, 143, 6);
-  border: black 5px solid;
-}
-
 .container1 {
   width: 40%;
   margin-bottom: 10px;
@@ -224,13 +214,11 @@ body {
 }
 
 @media screen and (max-width:1011px) {
-  #canvasGame1 {
+  #canvasGame1, #canvasGame2, #canvasGame2 {
     width: 100%;
   }
-  #canvasGame2 {
-    width: 100%;
-  }
-  #canvasGame3 {
-    width: 100%;
+
+  .bestScore {
+    width: 70%;
   }
 }
