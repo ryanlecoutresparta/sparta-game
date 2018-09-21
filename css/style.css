@@ -56,9 +56,9 @@ body {
   width: 70%;
 }
 
-.howToPlay1, .howToPlay2, .howToPlay3, .howToPlay4 {
+.howToPlay1, .howToPlay2, .howToPlay3, .howToPlay4, .howToPlay5 {
   font-size: 18px;
-  width: 50%;
+  width: 80%;
   padding-top: 10px;
   text-align: center;
   margin: auto;
@@ -74,6 +74,10 @@ body {
 
 .gold {
   color: gold;
+}
+
+.life {
+  color: lime;
 }
 
 .redSquare, .blueSquare, .goldCoin {

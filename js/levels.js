@@ -12,6 +12,9 @@ document.addEventListener('DOMContentLoaded', () => {
     Game.player.newPos();
     Game.player.update();
     Game.token1.update();
+    if (Game.extraLifeEnabled) {
+      Game.extraLife.update();
+    }
     if (Game.token2Enabled === true) {
       Game.token2.update();
     }
@@ -39,6 +42,7 @@ document.addEventListener('DOMContentLoaded', () => {
   Game.timer.innerHTML = `Time Left: ${Game.seconds}`;
   Game.lifeCounter = document.getElementsByClassName('lifeCounter')[0];
   Game.enemyVertical = true;
+  Game.extraLifeEnabled = true;
 
   let enemyArray = [
     [150, 200, 250, 300, 350, 400, 450, 500, 550, 600, 650, 700, 750, 800, 850],
@@ -103,10 +107,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
   countdown = () => {
     if (Game.seconds === 0) {
-      window.location.href = '../html/gameOver.html';
-    }
+      lostLife1.play();
+      Game.player.x = 10000;
+      Game.player.y = 10000;
+      gameOver();
+      Game.seconds = 0;
+      Game.timer.innerHTML = `Time Left: ${Game.seconds}`;
+    } else {
     Game.seconds--;
     Game.timer.innerHTML = `Time Left: ${Game.seconds}`;
+    }
   }
 
   lives = () => {
@@ -163,6 +173,27 @@ document.addEventListener('DOMContentLoaded', () => {
 
   newLevel = (coinNumber, level) => {
 
+    Game.extraLifeEnabled = false;
+
+    if ((level) % 3 === 0) {
+      Game.extraLifeEnabled = true;
+      Game.extraLife = new Component(35, 35, "lime", 950, 50);
+    }
+
+    lifeUp = () => {
+        if (Game.player.x <= Game.extraLife.x + 35 && Game.player.y <= Game.extraLife.y + 35 && Game.player.y + 30 >= Game.extraLife.y && Game.player.x >= Game.extraLife.x){
+          Game.extraLife.x = 15000;
+          Game.extraLife.y = 15000;
+          Game.livesRemaining++;
+        }
+
+        if (Game.player.x + 30 >= Game.extraLife.x && Game.player.y <= Game.extraLife.y + 35 && Game.player.y + 30 >= Game.extraLife.y && Game.player.x <= Game.extraLife.x + 35){
+          Game.extraLife.x = 15000;
+          Game.extraLife.y = 15000;
+          Game.livesRemaining++;
+        }
+      }
+
     Game.canvas = document.getElementById('canvasGame1');
     Game.c = Game.canvas.getContext('2d');
 
@@ -170,16 +201,11 @@ document.addEventListener('DOMContentLoaded', () => {
     levelReset();
 
     if (coinNumber === 1) {
-      Game.token1 = new Component(35, 7.5, "gold", coinArray[0][Game.random(coinArray[0])], coinArray[1][Game.random(coinArray[1])]);
-
+      gameTokens1();
     } else if (coinNumber === 2) {
-      Game.token1 = new Component(35, 7.5, "gold", coinArray[0][Game.random(coinArray[0])], coinArray[1][Game.random(coinArray[1])]);
-      Game.token2 = new Component(35, 7.5, "gold", coinArray[0][Game.random(coinArray[0])], coinArray[1][Game.random(coinArray[1])]);
-
+      gameTokens2();
     } else if (coinNumber === 3) {
-      Game.token1 = new Component(35, 7.5, "gold", coinArray[0][Game.random(coinArray[0])], coinArray[1][Game.random(coinArray[1])]);
-      Game.token2 = new Component(35, 7.5, "gold", coinArray[0][Game.random(coinArray[0])], coinArray[1][Game.random(coinArray[1])]);
-      Game.token3 = new Component(35, 7.5, "gold", coinArray[0][Game.random(coinArray[0])], coinArray[1][Game.random(coinArray[1])]);
+      gameTokens3();
     }
 
     function Enemy (x, y, size, dy, dx) {
@@ -507,6 +533,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     setInterval(() => {
       levelUp()
+    }, 1);
+    setInterval(() => {
+      lifeUp()
     }, 1);
   }
 
