@@ -1,0 +1,236 @@
+body {
+  margin: 10px 0px;
+  height: 100%;
+  background-color: rgb(92, 166, 238);
+}
+
+.header {
+  width: 100%;
+  text-align: center;
+  margin: auto;
+  font-size: 50px;
+  padding-bottom: 10px;
+  font-family: sans-serif;
+  font-weight: bold;
+}
+
+.intro {
+  width: 70%;
+  margin-top: 40px;
+  text-align: center;
+  margin: auto;
+  font-size: 40px;
+  padding: 10px;
+  font-family: sans-serif;
+  border: black 5px solid;
+}
+
+.lifeAndTimer {
+  display: flex;
+  width: 100%;
+}
+
+.cubes {
+  color: red;
+}
+
+.image {
+  margin: auto;
+  display: block;
+  width: 200px;
+  padding: 30px;
+}
+
+.buttons {
+  width: 100%;
+  margin: auto;
+  font-size: 40px;
+  margin: 30px 0px;
+  font-family: arial;
+}
+
+.levelName {
+  font-weight: bold;
+  font-size: 40px;
+  font-family: monospace;
+  width: 70%;
+}
+
+.howToPlay1, .howToPlay2, .howToPlay3, .howToPlay4 {
+  font-size: 18px;
+  width: 50%;
+  padding-top: 10px;
+  text-align: center;
+  margin: auto;
+}
+
+.blue {
+  color: cyan;
+}
+
+.red {
+  color: #ff0000;
+}
+
+.gold {
+  color: gold;
+}
+
+.redSquare, .blueSquare, .goldCoin {
+  display: block;
+  margin: auto;
+  padding: 10px;
+}
+
+.blueSquare {
+  height: 65px;
+  width: 80px;
+}
+
+.redSquare {
+  height: 80px;
+  width: 70px;
+}
+
+.goldCoin {
+  height: 60px;
+  width: 80px;
+}
+
+.playGame, .howToPlay, .highScores {
+  background-color: red;
+  border: 3px solid black;
+  font-size: 20px;
+  padding: 20px;
+  width: 200px;
+  text-align: center;
+}
+
+.playGame:hover, .howToPlay:hover, .highScores:hover, .quit:hover {
+  background-color: blue;
+  color: white;
+}
+
+.howToPlayPage, .highScoresPage, .youLose {
+  width: 70%;
+  margin-top: 40px;
+  text-align: center;
+  margin: auto;
+  font-size: 40px;
+  padding-top: 20px;
+  font-family: sans-serif;
+  border: black 5px solid;
+}
+
+#canvasGame1, #canvasGame2, #canvasGame3 {
+  margin: auto;
+  display: block;
+  box-sizing: border-box;
+}
+
+#canvasGame1 {
+  background-color: black;
+  border: white 5px solid;
+}
+
+#canvasGame2 {
+  background-color: rgb(156, 88, 9);
+  border: black 5px solid;
+}
+
+#canvasGame3 {
+  background-color: rgb(66, 143, 6);
+  border: black 5px solid;
+}
+
+.container1 {
+  width: 40%;
+  margin-bottom: 10px;
+}
+
+.container2 {
+  width: 20%;
+  margin-bottom: 10px;
+}
+
+.lifeCounter, .timer, .levelName {
+  margin-bottom: 10px;
+  text-align: center;
+  margin: auto;
+  border-top: 1px solid white;
+  padding-top: 10px;
+}
+
+.lifeCounter, .timer {
+  font-size: 30px;
+  font-style: italic;
+  font-family: sans-serif;
+  width: 50%;
+}
+
+.lifeCounter {
+  border-left: 1px solid white;
+}
+
+.timer {
+  border-right: 1px solid white;
+}
+
+.quitButton {
+  display: flex;
+  justify-content: center;
+  padding-top: 10px;
+}
+
+.quit {
+  background-color: red;
+  border: 3px solid black;
+  font-size: 16px;
+  padding: 0px;
+  width: 100px;
+  text-align: center;
+  height: 50px;
+}
+
+.savedScore, .currentScore {
+  font-size: 30px;
+  text-align: center;
+  margin: auto;
+  width: 300px;
+  padding-top: 20px;
+  padding-bottom: 5px;
+}
+
+.bestScore {
+  font-size: 35px;
+  font-weight: bold;
+  text-align: center;
+  margin: auto;
+  border: black 3px solid;
+  background-color: lime;
+  width: 300px;
+  margin-top: 20px;
+  padding-top: 10px;
+  padding-bottom: 5px;
+}
+
+.footer {
+  width: 100%;
+  text-align: center;
+  margin: auto;
+  font-size: 20px;
+  padding-top: 20px;
+  font-family: sans-serif;
+}
+
+@media screen and (max-width:1011px) {
+  #canvasGame1 {
+    width: 100%;
+  }
+  #canvasGame2 {
+    width: 100%;
+  }
+  #canvasGame3 {
+    width: 100%;
+  }
+}

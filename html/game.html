@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Squares</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <script src="../js/levels.js"></script>
+  <script src="../js/sound.js"></script>
+
+</head>
+<body>
+
+  <iframe src="../sound/186773__dafawe__sad-melody.wav" allow="autoplay" style="display:none" id="iFrameAudio">
+  </iframe>
+
+  <audio autoplay loop id="playAudio">
+    <source src="../sound/186773__dafawe__sad-melody.wav">
+    </audio>
+
+    <header class="header">Squares</header>
+
+    <div class="lifeAndTimer">
+      <div class="container1">
+        <div class="lifeCounter"></div>
+      </div>
+      <div class="container2">
+        <div class='levelName'></div>
+      </div>
+      <div class="container1">
+        <div class="timer"></div>
+      </div>
+    </div>
+
+    <canvas id="canvasGame1" width=1000px height=500px>
+      Your browser does not support HTML5 canvas - sorry!
+    </canvas>
+
+    <div class="quitButton">
+      <a href="../index.html"><button class="quit" type="button">QUIT</button></a>
+    </div>
+
+    <footer class="footer">&copy; 2018 Ryan Lecoutre</footer>
+
+  </body>
+  </html>
