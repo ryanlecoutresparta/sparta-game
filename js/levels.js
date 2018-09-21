@@ -135,6 +135,7 @@ document.addEventListener('DOMContentLoaded', () => {
   let coinGet1 = squaresSounds('../sound/242857__plasterbrain__coin-get.ogg');
   let coinGet2 = squaresSounds('../sound/242857__plasterbrain__coin-get.ogg');
   let coinGet3 = squaresSounds('../sound/242857__plasterbrain__coin-get.ogg');
+  let gotLife = squaresSounds('../sound/66136__aji__ding30603-spedup.wav');
 
   Game.random = (array) => {
     let arr = (array.length) - 1;
@@ -182,12 +183,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     lifeUp = () => {
         if (Game.player.x <= Game.extraLife.x + 35 && Game.player.y <= Game.extraLife.y + 35 && Game.player.y + 30 >= Game.extraLife.y && Game.player.x >= Game.extraLife.x){
+          gotLife.play();
           Game.extraLife.x = 15000;
           Game.extraLife.y = 15000;
           Game.livesRemaining++;
         }
 
         if (Game.player.x + 30 >= Game.extraLife.x && Game.player.y <= Game.extraLife.y + 35 && Game.player.y + 30 >= Game.extraLife.y && Game.player.x <= Game.extraLife.x + 35){
+          gotLife.play();
           Game.extraLife.x = 15000;
           Game.extraLife.y = 15000;
           Game.livesRemaining++;
