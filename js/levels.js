@@ -303,8 +303,8 @@ document.addEventListener('DOMContentLoaded', () => {
         Game.enemyVertical = true;
       }
     } else if (level % 2 === 0) {
-      let x = enemyArray[0][Game.random(enemyArray[0])];
-      let y = enemyArray[1][Game.random(enemyArray[1])];
+      let x = coinArray[0][Game.random(coinArray[0])];
+      let y = coinArray[1][Game.random(coinArray[1])];
       let size = enemyArray[2][Game.random(enemyArray[2])];
       let dy = 0.5;
       let dx = 0.5;
