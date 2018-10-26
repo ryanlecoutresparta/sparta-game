@@ -284,6 +284,82 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
 
+    function diagonalEnemy (x, y, size, dy, dx) {
+
+      this.x = x;
+      this.y = y;
+      this.size = size;
+      this.dy = dy;
+      this.dx = dx;
+
+      this.draw = () => {
+        Game.c.beginPath();
+        Game.c.fillStyle = "#ff0000";
+        Game.c.fillRect(this.x, this.y, this.size, this.size);
+        Game.c.fill();
+        Game.c.closePath();
+      };
+
+      this.movement = () => {
+        if (this.y+this.dy < 0) {
+          this.dy = -this.dy;
+        } else if (this.y+this.dy > 500 - this.size) {
+          this.dy = -this.dy;
+        }
+        this.y = this.y + this.dy;
+
+        if (this.x+this.dx < 0) {
+          this.dx = -this.dx;
+        } else if (this.x+this.dx > 1000 - this.size) {
+          this.dx = -this.dx;
+        } else if (this.x+this.dx < 60 && this.y+this.dy < 60) {
+          this.dx = -this.dx;
+          this.dy = -this.dy;
+        }
+        this.x = this.x + this.dx;
+
+        if (Game.player.x <= this.x + this.size && Game.player.y <= this.y + this.size && Game.player.y + 30 >= this.y && Game.player.x >= this.x){
+          if (Game.livesRemaining === 3) {
+            lostLife1.play();
+          } else if (Game.livesRemaining === 2) {
+            lostLife2.play();
+          } else if (Game.livesRemaining === 1) {
+            lostLife3.play();
+          }
+          Game.player.x = 10;
+          Game.player.y = 10;
+          Game.livesRemaining--;
+          if (Game.livesRemaining === 0) {
+            Game.player.x = 10000;
+            Game.player.y = 10000;
+            setTimeout(youLose = () => {
+              gameOver();
+            }, 1000);
+          }
+        }
+        if (Game.player.x + 30 >= this.x && Game.player.y <= this.y + this.size && Game.player.y + 30 >= this.y && Game.player.x + 30 <= this.x + this.size){
+          if (Game.livesRemaining === 3) {
+            lostLife1.play();
+          } else if (Game.livesRemaining === 2) {
+            lostLife2.play();
+          } else if (Game.livesRemaining === 1) {
+            lostLife3.play();
+          }
+          Game.player.x = 10;
+          Game.player.y = 10;
+          Game.livesRemaining--;
+          if (Game.livesRemaining === 0) {
+            Game.player.x = 10000;
+            Game.player.y = 10000;
+            setTimeout(youLose = () => {
+              gameOver();
+            }, 1000);
+          }
+        }
+        this.draw();
+      }
+    }
+
     if (level < 6) {
       if (Game.enemyVertical === true) {
         let x = enemyArray[0][Game.random(enemyArray[0])];
@@ -308,7 +384,7 @@ document.addEventListener('DOMContentLoaded', () => {
       let size = enemyArray[2][Game.random(enemyArray[2])];
       let dy = 0.5;
       let dx = 0.5;
-      arrayOfEnemies.push(new Enemy(x, y, size, dy, dx));
+      arrayOfEnemies.push(new diagonalEnemy(x, y, size, dy, dx));
     }
 
     addToEnemyArray = (array) => {
