@@ -245,11 +245,11 @@ document.addEventListener('DOMContentLoaded', () => {
         this.x = this.x + this.dx;
 
         if (Game.player.x <= this.x + this.size && Game.player.y <= this.y + this.size && Game.player.y + 30 >= this.y && Game.player.x >= this.x){
-          if (Game.livesRemaining === 3) {
+          if (Game.livesRemaining % 3 === 0) {
             lostLife1.play();
-          } else if (Game.livesRemaining === 2) {
+          } else if (Game.livesRemaining % 3 === 1) {
             lostLife2.play();
-          } else if (Game.livesRemaining === 1) {
+          } else if (Game.livesRemaining % 3 === 2) {
             lostLife3.play();
           }
           Game.player.x = 10;
@@ -264,11 +264,11 @@ document.addEventListener('DOMContentLoaded', () => {
           }
         }
         if (Game.player.x + 30 >= this.x && Game.player.y <= this.y + this.size && Game.player.y + 30 >= this.y && Game.player.x + 30 <= this.x + this.size){
-          if (Game.livesRemaining === 3) {
+          if (Game.livesRemaining % 3 === 0) {
             lostLife1.play();
-          } else if (Game.livesRemaining === 2) {
+          } else if (Game.livesRemaining % 3 === 1) {
             lostLife2.play();
-          } else if (Game.livesRemaining === 1) {
+          } else if (Game.livesRemaining % 3 === 2) {
             lostLife3.play();
           }
           Game.player.x = 10;
@@ -321,11 +321,11 @@ document.addEventListener('DOMContentLoaded', () => {
         this.x = this.x + this.dx;
 
         if (Game.player.x <= this.x + this.size && Game.player.y <= this.y + this.size && Game.player.y + 30 >= this.y && Game.player.x >= this.x){
-          if (Game.livesRemaining === 3) {
+          if (Game.livesRemaining % 3 === 0) {
             lostLife1.play();
-          } else if (Game.livesRemaining === 2) {
+          } else if (Game.livesRemaining % 3 === 1) {
             lostLife2.play();
-          } else if (Game.livesRemaining === 1) {
+          } else if (Game.livesRemaining % 3 === 2) {
             lostLife3.play();
           }
           Game.player.x = 10;
@@ -340,11 +340,11 @@ document.addEventListener('DOMContentLoaded', () => {
           }
         }
         if (Game.player.x + 30 >= this.x && Game.player.y <= this.y + this.size && Game.player.y + 30 >= this.y && Game.player.x + 30 <= this.x + this.size){
-          if (Game.livesRemaining === 3) {
+          if (Game.livesRemaining % 3 === 0) {
             lostLife1.play();
-          } else if (Game.livesRemaining === 2) {
+          } else if (Game.livesRemaining % 3 === 1) {
             lostLife2.play();
-          } else if (Game.livesRemaining === 1) {
+          } else if (Game.livesRemaining % 3 === 2) {
             lostLife3.play();
           }
           Game.player.x = 10;
