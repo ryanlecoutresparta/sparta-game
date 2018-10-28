@@ -202,7 +202,7 @@ body {
   margin: auto;
   border: black 3px solid;
   background-color: lime;
-  width: 300px;
+  width: 400px;
   margin-top: 20px;
   padding-top: 10px;
   padding-bottom: 5px;
@@ -223,6 +223,6 @@ body {
   }
 
   .bestScore {
-    width: 70%;
+    width: 80%;
   }
 }
