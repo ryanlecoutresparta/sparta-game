@@ -50,6 +50,12 @@ document.addEventListener('DOMContentLoaded', () => {
     [40, 45, 50, 55, 60, 65, 70, 75, 80, 90, 100, 125]
   ]
 
+  let diagonalEnemyArray = [
+    [500, 550, 600, 650, 700, 750, 800, 850],
+    [250, 275, 300, 325, 350],
+    [40, 45, 50, 55, 60, 65, 70, 75, 80, 90, 100, 125]
+  ]
+
   let coinArray = [
     [600, 625, 650, 675, 700, 725, 750, 775, 800, 825, 850, 875, 900, 925],
     [250, 275, 300, 325, 350, 360, 370, 380, 390, 400, 410, 420, 430, 440, 450, 460, 470, 480]
@@ -381,9 +387,9 @@ document.addEventListener('DOMContentLoaded', () => {
         Game.enemyVertical = true;
       }
     } else if (level % 2 === 0) {
-      let x = coinArray[0][Game.random(coinArray[0])];
-      let y = coinArray[1][Game.random(coinArray[1])];
-      let size = enemyArray[2][Game.random(enemyArray[2])];
+      let x = diagonalEnemyArray[0][Game.random(diagonalEnemyArray[0])];
+      let y = diagonalEnemyArray[1][Game.random(diagonalEnemyArray[1])];
+      let size = diagonalEnemyArray[2][Game.random(diagonalEnemyArray[2])];
       let dy = 0.5;
       let dx = 0.5;
       arrayOfEnemies.push(new diagonalEnemy(x, y, size, dy, dx));
