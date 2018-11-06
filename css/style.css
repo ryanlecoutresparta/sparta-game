@@ -101,7 +101,7 @@ body {
   width: 80px;
 }
 
-.playGame, .howToPlay, .highScores {
+.playGame, .howToPlay, .highScores, .resetScores {
   background-color: red;
   border: 3px solid black;
   font-size: 20px;
@@ -110,7 +110,7 @@ body {
   text-align: center;
 }
 
-.playGame:hover, .howToPlay:hover, .highScores:hover, .quit:hover {
+.playGame:hover, .howToPlay:hover, .highScores:hover, .quit:hover, .resetScores:hover {
   background-color: blue;
   color: white;
 }
