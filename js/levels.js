@@ -247,82 +247,10 @@ document.addEventListener('DOMContentLoaded', () => {
           this.dx = -this.dx;
         } else if (this.x+this.dx > 1000 - this.size) {
           this.dx = -this.dx;
-        }
-        this.x = this.x + this.dx;
-
-        if (Game.player.x <= this.x + this.size && Game.player.y <= this.y + this.size && Game.player.y + 30 >= this.y && Game.player.x >= this.x){
-          if (Game.livesRemaining % 3 === 0) {
-            lostLife1.play();
-          } else if (Game.livesRemaining % 3 === 1) {
-            lostLife2.play();
-          } else if (Game.livesRemaining % 3 === 2) {
-            lostLife3.play();
-          }
-          Game.player.x = 10;
-          Game.player.y = 10;
-          Game.livesRemaining--;
-          if (Game.livesRemaining === 0) {
-            Game.player.x = 10000;
-            Game.player.y = 10000;
-            setTimeout(youLose = () => {
-              gameOver();
-            }, 1000);
-          }
-        }
-        if (Game.player.x + 30 >= this.x && Game.player.y <= this.y + this.size && Game.player.y + 30 >= this.y && Game.player.x + 30 <= this.x + this.size){
-          if (Game.livesRemaining % 3 === 0) {
-            lostLife1.play();
-          } else if (Game.livesRemaining % 3 === 1) {
-            lostLife2.play();
-          } else if (Game.livesRemaining % 3 === 2) {
-            lostLife3.play();
-          }
-          Game.player.x = 10;
-          Game.player.y = 10;
-          Game.livesRemaining--;
-          if (Game.livesRemaining === 0) {
-            Game.player.x = 10000;
-            Game.player.y = 10000;
-            setTimeout(youLose = () => {
-              gameOver();
-            }, 1000);
-          }
-        }
-        this.draw();
-      }
-    }
-
-    function diagonalEnemy (x, y, size, dy, dx) {
-
-      this.x = x;
-      this.y = y;
-      this.size = size;
-      this.dy = dy;
-      this.dx = dx;
-
-      this.draw = () => {
-        Game.c.beginPath();
-        Game.c.fillStyle = "#ff0000";
-        Game.c.fillRect(this.x, this.y, this.size, this.size);
-        Game.c.fill();
-        Game.c.closePath();
-      };
-
-      this.movement = () => {
-        if (this.y+this.dy < 0) {
+        } else if (this.x+this.dx < 50 && this.y+this.dy < 60) {
           this.dy = -this.dy;
-        } else if (this.y+this.dy > 500 - this.size) {
-          this.dy = -this.dy;
-        }
-        this.y = this.y + this.dy;
-
-        if (this.x+this.dx < 0) {
+        } else if (this.x+this.dx < 60 && this.y+this.dy < 50) {
           this.dx = -this.dx;
-        } else if (this.x+this.dx > 1000 - this.size) {
-          this.dx = -this.dx;
-        } else if (this.x+this.dx < 60 && this.y+this.dy < 60) {
-          this.dx = -this.dx;
-          this.dy = -this.dy;
         }
         this.x = this.x + this.dx;
 
@@ -386,13 +314,14 @@ document.addEventListener('DOMContentLoaded', () => {
         arrayOfEnemies.push(new Enemy(x, y, size, dy, dx));
         Game.enemyVertical = true;
       }
-    } else if (level % 2 === 0) {
+    }
+    else if (level % 2 === 0) {
       let x = diagonalEnemyArray[0][Game.random(diagonalEnemyArray[0])];
       let y = diagonalEnemyArray[1][Game.random(diagonalEnemyArray[1])];
       let size = diagonalEnemyArray[2][Game.random(diagonalEnemyArray[2])];
       let dy = 0.5;
       let dx = 0.5;
-      arrayOfEnemies.push(new diagonalEnemy(x, y, size, dy, dx));
+      arrayOfEnemies.push(new Enemy(x, y, size, dy, dx));
     }
 
     addToEnemyArray = (array) => {
@@ -658,7 +587,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     setTimeout(youLose = () => {
       window.location.href = '../html/gameOver.html'
-    }, 1000);
+    }, 800);
   }
 
   setInterval(() => {
