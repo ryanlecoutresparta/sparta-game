@@ -57,8 +57,8 @@ document.addEventListener('DOMContentLoaded', () => {
   ]
 
   let coinArray = [
-    [600, 625, 650, 675, 700, 725, 750, 775, 800, 825, 850, 875, 900, 925],
-    [250, 275, 300, 325, 350, 360, 370, 380, 390, 400, 410, 420, 430, 440, 450, 460, 470, 480]
+    [200, 225, 250, 275, 300, 325, 350, 375, 400, 425, 450, 475, 500, 525, 550, 575, 600, 625, 650, 675, 700, 725, 750, 775, 800, 825, 850, 875, 900, 925],
+    [100, 125, 150, 175, 200, 225, 250, 275, 300, 325, 350, 360, 370, 380, 390, 400, 410, 420, 430, 440, 450, 460, 470, 480]
   ]
 
   tokenHit = () => {
@@ -247,9 +247,9 @@ document.addEventListener('DOMContentLoaded', () => {
           this.dx = -this.dx;
         } else if (this.x+this.dx > 1000 - this.size) {
           this.dx = -this.dx;
-        } else if (this.x+this.dx < 50 && this.y+this.dy < 60) {
+        } else if (this.x+this.dx < 60 && this.y+this.dy < 70) {
           this.dy = -this.dy;
-        } else if (this.x+this.dx < 60 && this.y+this.dy < 50) {
+        } else if (this.x+this.dx < 75 && this.y+this.dy < 65) {
           this.dx = -this.dx;
         }
         this.x = this.x + this.dx;
